@@ -70,7 +70,7 @@ session_start();
                 <h2>Explore & Share</h2>
                 <p>Browse recipes by category, region, or popularity. Share your creations with the community.</p>
                 </br>
-                <img src="<?php echo IMG_URL; ?>share_graphic.png" alt="2 girls cooking" width="200" height="200">
+                <img src="<?php echo IMG_URL; ?>share_graphic.png" alt="2 girls cooking" width="250" height="200">
             </div>
         </div>
     </section>
