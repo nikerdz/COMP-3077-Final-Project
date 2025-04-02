@@ -1,9 +1,0 @@
-# Enable URL rewriting
-RewriteEngine On
-
-# Set the base directory for the entire project
-RewriteBase /COMP-3077-Final-Project/
-
-# Redirect requests for static pages inside /public/static/
-RewriteCond %{REQUEST_URI} ^/COMP-3077-Final-Project/public/(about|contact|login|register)$
-RewriteRule ^public/(.*)$ public/static/$1.php [L]

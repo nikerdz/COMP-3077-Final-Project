@@ -1,4 +1,7 @@
 <?php
+// Include the constants.php file
+require_once('../config/constants.php');
+
 // Start the session to check if the user is logged in
 session_start();
 ?>
@@ -10,7 +13,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RecipeHub | Home</title>
-    <link rel="stylesheet" href="../../assets/styles/style.css"> 
+    <link rel="stylesheet" href="<?php echo CSS_URL; ?>">
 </head>
 <body>
 
@@ -42,6 +45,8 @@ session_start();
         <h1>Welcome to RecipeHub!</h1>
         <p>Discover and share your favorite recipes from around the world.  
         Create your own digital recipe book, explore new cuisines, and connect with fellow cooking enthusiasts.</p>
+                </br>
+                </br>
         <a href="register.php" class="btn">Get Started</a>
     </div>
 
@@ -50,16 +55,22 @@ session_start();
             <div class="feature">
                 <h2>Your Recipe Book</h2>
                 <p>Save and organize your personal recipes, add images, and categorize them by cuisine.</p>
+                </br>
+                <img src="<?php echo IMG_URL; ?>recipe_graphic.png" alt="Girl with recipe book" width="200" height="200">
             </div>
 
             <div class="feature">
                 <h2>Rate & Review</h2>
                 <p>Rate and review recipes from other users. Explore different cuisines and discover hidden gems!</p>
+                </br>
+                <img src="<?php echo IMG_URL; ?>rate_graphic.png" alt="Hands with yes or no signs" width="200" height="200">
             </div>
 
             <div class="feature">
                 <h2>Explore & Share</h2>
                 <p>Browse recipes by category, region, or popularity. Share your creations with the community.</p>
+                </br>
+                <img src="<?php echo IMG_URL; ?>share_graphic.png" alt="2 girls cooking" width="200" height="200">
             </div>
         </div>
     </section>
