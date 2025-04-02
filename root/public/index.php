@@ -13,16 +13,20 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RecipeHub | Home</title>
-    <link rel="stylesheet" href="<?php echo CSS_URL; ?>">
+    <link rel="stylesheet" href="../assets/styles/style.css">
 </head>
 <body>
+
 
 <!-- Navigation Bar -->
 <header>
     <nav class="navbar">
         <div class="container">
 
-            <a href="index.php" class="logo">RecipeHub</a>
+            <div class="logo-container">
+                <img src="<?php echo IMG_URL; ?>logo.png" alt="RecipeHub Logo" width="65" height="65">
+                <a href="index.php" class="logo">RecipeHub</a>
+            </div>
 
             <ul class="nav-links">
                 <li><a href="about.php">About</a></li>
@@ -38,6 +42,7 @@ session_start();
         </div>
     </nav>
 </header>
+
 
 <!-- Main Content Section -->
 <main>
