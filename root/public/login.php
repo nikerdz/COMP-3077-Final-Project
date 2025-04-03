@@ -89,9 +89,8 @@ if (isset($_GET['success'])) {
                         <li><a href="<?php echo PUBLIC_URL; ?>user/dashboard.php">Dashboard</a></li>
                         <li><a href="<?php echo PUBLIC_URL; ?>user/profile.php">Profile</a></li>
                         <li><a href="<?php echo PUBLIC_URL; ?>user/explore.php">Explore</a></li>
+                        </br></br></br></br></br></br></br></br></br></br></br></br>
                     <?php endif; ?>
-
-                    </br></br></br></br></br></br></br></br></br></br></br></br>
                     
                     <li><a href="<?php echo PUBLIC_URL; ?>about.php">About</a></li>
                     <li><a href="<?php echo WIKI_URL; ?>wiki-home.php">Help</a></li>
@@ -147,7 +146,7 @@ if (isset($_GET['success'])) {
             <?php unset($_SESSION['login_error']); ?>
         <?php endif; ?>
         </form>
-        </br></br></br></br></br>
+        </br></br>/<br>
 </main>
 
 

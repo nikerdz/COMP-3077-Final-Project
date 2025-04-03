@@ -2,8 +2,8 @@
 // Database credentials
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'COMP-3077-Final-Project');
-define('DB_USER', 'root'); // Change if using a different user
-define('DB_PASS', ''); // Change if your MySQL has a password
+define('DB_USER', 'root'); 
+define('DB_PASS', ''); 
 
 try {
     // Connect to the database using PDO
