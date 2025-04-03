@@ -28,6 +28,10 @@
     height: 70px;
 }
 
+.logo-container img:hover {
+    cursor: pointer;
+}
+
 .logo {
     font-family: "Just Another Hand";
     font-size: 45px;
@@ -35,7 +39,6 @@
     text-decoration: none;
     line-height: 1;
 }
-
 
 .logo:hover {
     color: #ffafcc;

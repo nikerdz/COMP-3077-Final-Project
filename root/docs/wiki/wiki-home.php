@@ -38,6 +38,7 @@ session_start();
     <title>RecipeHub Wiki | Home</title>
 
     <link rel="stylesheet" href="<?php echo CSS_URL; ?>?v=<?php echo time(); ?>"> <!-- Disable caching of style.css so I can properly load the changes I make -->
+    <script src="<?php echo JS_URL; ?>script.js?v=<?php echo time(); ?>"></script>
 </head>
 <body>
 
@@ -48,8 +49,14 @@ session_start();
         <div class="container">
 
             <div class="logo-container">
-                <img src="<?php echo IMG_URL; ?>logo.png" alt="RecipeHub Logo">
-                <a href="<?php echo PUBLIC_URL; ?>index.php" class="logo">RecipeHub</a>
+                <img 
+                    src="<?php echo IMG_URL; ?>logo.png" 
+                    alt="RecipeHub Logo"
+                    id="logo-img"
+                    data-menu-icon="<?php echo IMG_URL; ?>menu.png"
+                    data-logo="<?php echo IMG_URL; ?>logo.png">
+
+                    <a href="<?php echo PUBLIC_URL; ?>index.php" class="logo">RecipeHub</a>
             </div>
 
             <ul class="nav-links">
@@ -61,6 +68,16 @@ session_start();
                     <li><a href="<?php echo PUBLIC_URL; ?>register.php">Register</a></li>
                 <?php endif; ?>
             </ul>
+
+               <!-- Sidebar -->
+               <div id="sidebar" class="sidebar">
+                <ul class="sidebar-links">
+                    <li><a href="<?php echo PUBLIC_URL; ?>index.php">Home</a></li>
+                    <li><a href="<?php echo PUBLIC_URL; ?>about.php">About</a></li>
+                    <li><a href="<?php echo PUBLIC_URL; ?>contact.php">Contact</a></li>
+                    <li><a href="<?php echo WIKI_URL; ?>wiki-home.php">Help</a></li>
+                </ul>
+             </div>
         </div>
     </nav>
 </header>
@@ -76,21 +93,21 @@ session_start();
         <div class="container">
             <div class="feature">
                 <h2>User Guide</h2>
-                <p>Save and organize your personal recipes, add images, and categorize them by cuisine.</p>
+                <p></p>
                 </br>
                 <img src="<?php echo IMG_URL; ?>guide.png" alt="Girl with recipe book" width="200" height="200">
             </div>
 
             <div class="feature">
                 <h2>Frequently Asked Questions</h2>
-                <p>Rate and review recipes from other users. Explore different cuisines and discover hidden gems!</p>
+                <p></p>
                 </br>
                 <img src="<?php echo IMG_URL; ?>faq.png" alt="Hands with yes or no signs" width="200" height="300">
             </div>
 
             <div class="feature">
                 <h2>Something</h2>
-                <p>Browse recipes by category, region, or popularity. Share your creations with the community.</p>
+                <p></p>
                 </br>
                 <img src="<?php echo IMG_URL; ?>share_graphic.png" alt="2 girls cooking" width="250" height="200">
             </div>

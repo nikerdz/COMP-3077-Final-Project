@@ -38,6 +38,7 @@ session_start();
     <title>RecipeHub | Contact</title>
 
     <link rel="stylesheet" href="<?php echo CSS_URL; ?>?v=<?php echo time(); ?>"> <!-- Disable caching of style.css so I can properly load the changes I make -->
+    <script src="<?php echo JS_URL; ?>script.js?v=<?php echo time(); ?>"></script>
 </head>
 <body>
 
@@ -48,8 +49,14 @@ session_start();
         <div class="container">
 
             <div class="logo-container">
-                <img src="<?php echo IMG_URL; ?>logo.png" alt="RecipeHub Logo">
-                <a href="index.php" class="logo">RecipeHub</a>
+                <img 
+                    src="<?php echo IMG_URL; ?>logo.png" 
+                    alt="RecipeHub Logo"
+                    id="logo-img"
+                    data-menu-icon="<?php echo IMG_URL; ?>menu.png"
+                    data-logo="<?php echo IMG_URL; ?>logo.png">
+
+                    <a href="index.php" class="logo">RecipeHub</a>
             </div>
 
             <ul class="nav-links">
@@ -61,6 +68,16 @@ session_start();
                     <li><a href="register.php">Register</a></li>
                 <?php endif; ?>
             </ul>
+
+                <!-- Sidebar -->
+            <div id="sidebar" class="sidebar">
+                <ul class="sidebar-links">
+                    <li><a href="<?php echo PUBLIC_URL; ?>index.php">Home</a></li>
+                    <li><a href="<?php echo PUBLIC_URL; ?>about.php">About</a></li>
+                    <li><a href="<?php echo PUBLIC_URL; ?>contact.php">Contact</a></li>
+                    <li><a href="<?php echo WIKI_URL; ?>wiki-home.php">Help</a></li>
+                </ul>
+             </div>
         </div>
     </nav>
 </header>
