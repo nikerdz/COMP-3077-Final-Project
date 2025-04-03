@@ -61,22 +61,34 @@ session_start();
 
             <ul class="nav-links">
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <li><a href="dashboard.php">Dashboard</a></li>
-                    <li><a href="logout.php">Log Out</a></li>
+                    <li><a href="user/explore.php">Explore</a></li>
+                    <li><a href="user/profile.php">Profile</a></li>
+                    <li><a href="user/dashboard.php">Dashboard</a></li>
+                    <li><a href="<?php echo PHP_URL; ?>logout_submit.php">Log Out</a></li>
                 <?php else: ?>
-                    <li><a href="<?php echo PUBLIC_URL; ?>login.php">Log In</a></li>
-                    <li><a href="<?php echo PUBLIC_URL; ?>register.php">Register</a></li>
+                    <li><a href="login.php">Log In</a></li>
+                    <li><a href="register.php">Register</a></li>
                 <?php endif; ?>
             </ul>
 
-               <!-- Sidebar -->
-               <div id="sidebar" class="sidebar">
+            <!-- Sidebar -->
+            <div id="sidebar" class="sidebar">
                 <ul class="sidebar-links">
                     <li><a href="<?php echo PUBLIC_URL; ?>index.php">Home</a></li>
+                    
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <li><a href="<?php echo PUBLIC_URL; ?>user/dashboard.php">Dashboard</a></li>
+                        <li><a href="<?php echo PUBLIC_URL; ?>user/profile.php">Profile</a></li>
+                        <li><a href="<?php echo PUBLIC_URL; ?>user/explore.php">Explore</a></li>
+                    <?php endif; ?>
+
+                    </br></br></br></br></br></br></br></br></br></br></br></br>
+
                     <li><a href="<?php echo PUBLIC_URL; ?>about.php">About</a></li>
                     <li><a href="<?php echo WIKI_URL; ?>wiki-home.php">Help</a></li>
                     <li><a href="<?php echo PUBLIC_URL; ?>contact.php">Contact</a></li>
                 </ul>
+
 
                 <!-- Profile Section at Bottom -->
             <div class="sidebar-profile">
@@ -137,7 +149,7 @@ session_start();
 
         <ul class="nav-links">
             <li><a href="<?php echo PUBLIC_URL; ?>about.php">About</a></li>
-            <li><a href="<?php echo WIKI_URL; ?>wiki-home.html">Help</a></li>
+            <li><a href="<?php echo WIKI_URL; ?>wiki-home.php">Help</a></li>
             <li><a href="<?php echo PUBLIC_URL; ?>contact.php">Contact</a></li>
         </ul>
     </div>
