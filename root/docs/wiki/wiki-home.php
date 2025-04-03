@@ -62,9 +62,9 @@ session_start();
             <ul class="nav-links">
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li><a href="dashboard.php">Dashboard</a></li>
-                    <li><a href="logout.php">Logout</a></li>
+                    <li><a href="logout.php">Log Out</a></li>
                 <?php else: ?>
-                    <li><a href="<?php echo PUBLIC_URL; ?>login.php">Login</a></li>
+                    <li><a href="<?php echo PUBLIC_URL; ?>login.php">Log In</a></li>
                     <li><a href="<?php echo PUBLIC_URL; ?>register.php">Register</a></li>
                 <?php endif; ?>
             </ul>
@@ -74,9 +74,23 @@ session_start();
                 <ul class="sidebar-links">
                     <li><a href="<?php echo PUBLIC_URL; ?>index.php">Home</a></li>
                     <li><a href="<?php echo PUBLIC_URL; ?>about.php">About</a></li>
-                    <li><a href="<?php echo PUBLIC_URL; ?>contact.php">Contact</a></li>
                     <li><a href="<?php echo WIKI_URL; ?>wiki-home.php">Help</a></li>
+                    <li><a href="<?php echo PUBLIC_URL; ?>contact.php">Contact</a></li>
                 </ul>
+
+                <!-- Profile Section at Bottom -->
+            <div class="sidebar-profile">
+                <img src="<?php echo IMG_URL; ?>profile.png" alt="Profile Picture">
+                <div class="profile-info">
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <p>Welcome, <?php echo $_SESSION['username']; ?></p>
+                        <a href="<?php echo PUBLIC_URL; ?>logout.php" class="logout-btn">Log Out</a>
+                    <?php else: ?>
+                        <a href="<?php echo PUBLIC_URL; ?>login.php" class="auth-link">Log In</a>
+                        <a href="<?php echo PUBLIC_URL; ?>register.php" class="auth-link">Register</a>
+                    <?php endif; ?>
+                </div>
+            </div>
              </div>
         </div>
     </nav>
@@ -123,8 +137,8 @@ session_start();
 
         <ul class="nav-links">
             <li><a href="<?php echo PUBLIC_URL; ?>about.php">About</a></li>
-            <li><a href="<?php echo PUBLIC_URL; ?>contact.php">Contact</a></li>
             <li><a href="<?php echo WIKI_URL; ?>wiki-home.html">Help</a></li>
+            <li><a href="<?php echo PUBLIC_URL; ?>contact.php">Contact</a></li>
         </ul>
     </div>
 </footer>
