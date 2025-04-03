@@ -4,6 +4,7 @@
 
 @import url('templates/header.css');
 @import url('templates/footer.css');
+@import url('templates/form.css');
 
 /* ==========================
    General Styles 
@@ -45,7 +46,8 @@ body {
 }
 
 .hero-section p {
-    font-size: 1.2rem;
+    font-family: "Just Another Hand", cursive;
+    font-size: 40px;
     margin-bottom: 30px;
     max-width: 800px;
     margin: 0 auto;
@@ -67,9 +69,23 @@ body {
     transform: scale(1.05);
 }
 
+.less-hero {
+    padding: 50px 0; /* Reduce padding */
+    text-align: center;
+    background-color: #f4a261;
+}
+
+
 /* ==========================
    Features Section 
 ========================== */
+
+.just-another-hand-regular {
+    font-family: "Just Another Hand", cursive;
+    font-weight: 400;
+    font-style: normal;
+}  
+
 .features {
     display: flex;
     justify-content: space-between;
@@ -101,7 +117,8 @@ body {
 }
 
 .feature p {
-    font-size: 1rem;
+    font-family: "Just Another Hand", cursive;
+    font-size: 30px;
     color: #555;
 }
 
