@@ -1,6 +1,6 @@
 <?php
 // Include the constants.php file
-require_once('../config/constants.php');
+require_once('../../config/constants.php');
 
 // Start the session to check if the user is logged in
 session_start();
@@ -35,7 +35,7 @@ session_start();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Just+Another+Hand&display=swap" rel="stylesheet">
 
-    <title>RecipeHub | Home</title>
+    <title>RecipeHub Wiki | Home</title>
 
     <link rel="stylesheet" href="<?php echo CSS_URL; ?>?v=<?php echo time(); ?>"> <!-- Disable caching of style.css so I can properly load the changes I make -->
 </head>
@@ -49,7 +49,7 @@ session_start();
 
             <div class="logo-container">
                 <img src="<?php echo IMG_URL; ?>logo.png" alt="RecipeHub Logo">
-                <a href="index.php" class="logo">RecipeHub</a>
+                <a href="<?php echo PUBLIC_URL; ?>index.php" class="logo">RecipeHub</a>
             </div>
 
             <ul class="nav-links">
@@ -57,8 +57,8 @@ session_start();
                     <li><a href="dashboard.php">Dashboard</a></li>
                     <li><a href="logout.php">Logout</a></li>
                 <?php else: ?>
-                    <li><a href="login.php">Login</a></li>
-                    <li><a href="register.php">Register</a></li>
+                    <li><a href="<?php echo PUBLIC_URL; ?>login.php">Login</a></li>
+                    <li><a href="<?php echo PUBLIC_URL; ?>register.php">Register</a></li>
                 <?php endif; ?>
             </ul>
         </div>
@@ -69,38 +69,33 @@ session_start();
 <!-- Main Content Section -->
 <main>
     <div class="hero-section">
-        <h1>Welcome to RecipeHub!</h1>
-        <p>Discover and share your favorite recipes from around the world.  
-        Create your own digital recipe book, explore new cuisines, and connect with fellow cooking enthusiasts.</p>
-                </br>
-                </br>
-        <a href="register.php" class="btn">Get Started</a>
+        <h1>RecipeHub Wiki</h1>
+        <p>Need help using RecipeHub? Browse the articles below for a solution.</p>
     </div>
-
     <section class="features">
         <div class="container">
             <div class="feature">
-                <h2>Your Recipe Book</h2>
+                <h2>User Guide</h2>
                 <p>Save and organize your personal recipes, add images, and categorize them by cuisine.</p>
                 </br>
-                <img src="<?php echo IMG_URL; ?>recipe_graphic.png" alt="Girl with recipe book" width="200" height="200">
+                <img src="<?php echo IMG_URL; ?>guide.png" alt="Girl with recipe book" width="200" height="200">
             </div>
 
             <div class="feature">
-                <h2>Rate & Review</h2>
+                <h2>Frequently Asked Questions</h2>
                 <p>Rate and review recipes from other users. Explore different cuisines and discover hidden gems!</p>
                 </br>
-                <img src="<?php echo IMG_URL; ?>rate_graphic.png" alt="Hands with yes or no signs" width="200" height="200">
+                <img src="<?php echo IMG_URL; ?>faq.png" alt="Hands with yes or no signs" width="200" height="300">
             </div>
 
             <div class="feature">
-                <h2>Explore & Share</h2>
+                <h2>Something</h2>
                 <p>Browse recipes by category, region, or popularity. Share your creations with the community.</p>
                 </br>
                 <img src="<?php echo IMG_URL; ?>share_graphic.png" alt="2 girls cooking" width="250" height="200">
             </div>
-        </div>
     </section>
+    </div>
 </main>
 
 
@@ -110,9 +105,9 @@ session_start();
         <p>&copy; 2025 RecipeHub. All rights reserved.</p>
 
         <ul class="nav-links">
-            <li><a href="about.php">About</a></li>
-            <li><a href="contact.php">Contact</a></li>
-            <li><a href="<?php echo WIKI_URL; ?>wiki-home.php">Help</a></li>
+            <li><a href="<?php echo PUBLIC_URL; ?>about.php">About</a></li>
+            <li><a href="<?php echo PUBLIC_URL; ?>contact.php">Contact</a></li>
+            <li><a href="<?php echo WIKI_URL; ?>wiki-home.html">Help</a></li>
         </ul>
     </div>
 </footer>

@@ -29,12 +29,13 @@
 }
 
 .logo {
-    font-size: 28px;
-    font-weight: bold;
+    font-family: "Just Another Hand";
+    font-size: 45px;
     color: #f4a261;
     text-decoration: none;
     line-height: 1;
 }
+
 
 .logo:hover {
     color: #ffafcc;

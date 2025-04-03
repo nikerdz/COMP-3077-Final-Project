@@ -2,6 +2,12 @@
 // Base URL for project
 define('BASE_URL', '/COMP-3077-Final-Project/root/'); 
 
+// Path to public html/php files
+define('PUBLIC_URL', BASE_URL . 'public/');
+
+// Path to config folder
+define('CONFIG_URL', BASE_URL . 'config/');
+
 // Path to your styles
 define('CSS_URL', BASE_URL . 'assets/styles/style.css');
 define('HEADER_CSS_URL', BASE_URL . 'assets/styles/templates/header.css');

@@ -1,4 +1,7 @@
 <?php
+// Include the constants.php file
+require_once('../../../config/constants.php');
+
 // Start the session to access user info
 session_start();
 
@@ -9,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = htmlspecialchars($_POST["message"]);
 
     // Email settings
-    $to = "khan661@uwindsor.ca"; //
+    $to = "khan661@uwindsor.ca";
     $subject = "New Contact Form Inquiry from $name";
     $headers = "From: $email\r\n";
     $headers .= "Reply-To: $email\r\n";
@@ -21,13 +24,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Send the email
     if (mail($to, $subject, $body, $headers)) {
-        echo "<script>alert('Message sent successfully!'); window.location.href='contact.php';</script>";
+        // Use the constant PUBLIC_URL for redirection
+        echo "<script>alert('Message sent successfully!'); window.location.href='" . PUBLIC_URL . "contact.php';</script>";
     } else {
         echo "<script>alert('Error sending message. Please try again.'); window.history.back();</script>";
     }
 } else {
-    // Redirect if accessed directly
-    header("Location: contact.php");
+    // Redirect if accessed directly, using PUBLIC_URL constant
+    header("Location: " . PUBLIC_URL . "contact.php");
     exit();
 }
 ?>

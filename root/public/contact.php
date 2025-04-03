@@ -100,7 +100,7 @@ session_start();
         <ul class="nav-links">
             <li><a href="about.php">About</a></li>
             <li><a href="contact.php">Contact</a></li>
-            <li><a href="<?php echo WIKI_URL; ?>wiki-home.html">Help</a></li>
+            <li><a href="<?php echo WIKI_URL; ?>wiki-home.php">Help</a></li>
         </ul>
     </div>
 </footer>
