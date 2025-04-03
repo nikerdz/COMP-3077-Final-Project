@@ -10,6 +10,9 @@ define('SIDEBAR_CSS_URL', BASE_URL . 'assets/styles/templates/sidebar.css');
 // Path to JavaScript files
 define('JS_URL', BASE_URL . 'assets/scripts/js/script.js');
 
-// Path to images
+// Path to images folder
 define('IMG_URL', BASE_URL . 'assets/img/');
+
+// Path to wiki pages
+define('WIKI_URL', BASE_URL . 'docs/wiki/');
 ?>
