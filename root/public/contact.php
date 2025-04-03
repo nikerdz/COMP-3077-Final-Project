@@ -62,7 +62,7 @@ session_start();
             <ul class="nav-links">
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li><a href="dashboard.php">Dashboard</a></li>
-                    <li><a href="logout.php">Log Out</a></li>
+                    <li><a href="<?php echo PHP_URL; ?>logout_submit.php">Log Out</a></li>
                 <?php else: ?>
                     <li><a href="login.php">Log In</a></li>
                     <li><a href="register.php">Register</a></li>
@@ -84,7 +84,7 @@ session_start();
                 <div class="profile-info">
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <p>Welcome, <?php echo $_SESSION['username']; ?></p>
-                        <a href="<?php echo PUBLIC_URL; ?>logout.php" class="logout-btn">Log Out</a>
+                        <a href="<?php echo PHP_URL; ?>logout_submit.php" class="logout-btn">Log Out</a>
                     <?php else: ?>
                         <a href="<?php echo PUBLIC_URL; ?>login.php" class="auth-link">Log In</a>
                         <a href="<?php echo PUBLIC_URL; ?>register.php" class="auth-link">Register</a>

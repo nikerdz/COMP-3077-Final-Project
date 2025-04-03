@@ -1,4 +1,4 @@
-/* Contact Form Styles */
+/* Contact Form Styles which are also used for every other form */
 .contact-form {
     width: 600px;
     margin: 30px auto;
@@ -16,7 +16,6 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Styling for the <p> element inside the form */
 .contact-form p {
     font-family: "Just Another Hand", cursive;
     font-size: 30px;
@@ -31,7 +30,7 @@
     border-left: 5px solid #ff5757;
     color: #d9534f;
     padding: 10px;
-    margin-top: 15px; /* Adds space between button and errors */
+    margin-top: 15px;
     border-radius: 5px;
     text-align: center;
 }
@@ -40,7 +39,6 @@
 .contact-form .error {
     margin: 5px 0;
 }
-
 
 .contact-form label {
     font-size: 1rem;
@@ -88,6 +86,3 @@
     background: #355c7d;
     transform: scale(1.05);
 }
-
-
-

@@ -5,8 +5,12 @@ require_once('../config/constants.php');
 // Start the session to check if the user is logged in
 session_start();
 
-if (isset($_GET['success']) && $_GET['success'] == 1) {
-    echo "<script>alert('Registration successful! You can now log in.');</script>";
+if (isset($_GET['success'])) {
+    if ($_GET['success'] == '1') {
+        echo "<script>alert('Registration successful! You can now log in.');</script>";
+    } elseif ($_GET['success'] == 'logout') {
+        echo "<script>alert('You have been successfully logged out.');</script>";
+    }
 }
 
 ?>
@@ -67,7 +71,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
             <ul class="nav-links">
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li><a href="dashboard.php">Dashboard</a></li>
-                    <li><a href="logout.php">Log Out</a></li>
+                    <li><a href="<?php echo PHP_URL; ?>logout_submit.php">Log Out</a></li>
                 <?php else: ?>
                     <li><a href="login.php">Log In</a></li>
                     <li><a href="register.php">Register</a></li>
@@ -90,7 +94,7 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
                 <div class="profile-info">
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <p>Welcome, <?php echo $_SESSION['username']; ?></p>
-                        <a href="<?php echo PUBLIC_URL; ?>logout.php" class="logout-btn">Log Out</a>
+                        <a href="<?php echo PHP_URL; ?>logout_submit.php" class="logout-btn">Log Out</a>
                     <?php else: ?>
                         <a href="<?php echo PUBLIC_URL; ?>login.php" class="auth-link">Log In</a>
                         <a href="<?php echo PUBLIC_URL; ?>register.php" class="auth-link">Register</a>
@@ -107,6 +111,31 @@ if (isset($_GET['success']) && $_GET['success'] == 1) {
     <div class="hero-section less-hero">
         <h1>Log In to RecipeHub</h1>
     </div>
+    </br></br></br>
+    
+        <!-- Form that sends POST request to login_submit.php -->
+        <form action="<?php echo PHP_URL; ?>login_submit.php" method="POST" class="contact-form">
+            <p>Sign In to your RecipeHub Account</p>
+            <!-- Username -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <!-- Password -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <!-- Submit Button -->
+            <button type="submit">Log In</button>
+
+            <!-- Display error message if there's a login error -->
+        <?php if (isset($_SESSION['login_error'])): ?>
+            <div class="error-messages">
+                <p class="error">Error! <?php echo $_SESSION['login_error']; ?></p>
+            </div>
+            <?php unset($_SESSION['login_error']); ?>
+        <?php endif; ?>
+        </form>
+        </br></br></br></br></br>
 </main>
 
 
