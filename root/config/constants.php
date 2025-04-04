@@ -5,6 +5,9 @@ define('BASE_URL', '/COMP-3077-Final-Project/root/');
 // Path to public html/php files
 define('PUBLIC_URL', BASE_URL . 'public/');
 
+// Path to user html/php files
+define('USER_URL', BASE_URL . 'public/user/');
+
 // Path to config folder
 define('CONFIG_URL', BASE_URL . 'config/');
 

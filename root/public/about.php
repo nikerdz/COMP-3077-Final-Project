@@ -80,7 +80,6 @@ session_start();
                         <li><a href="<?php echo PUBLIC_URL; ?>user/dashboard.php">Dashboard</a></li>
                         <li><a href="<?php echo PUBLIC_URL; ?>user/profile.php">Profile</a></li>
                         <li><a href="<?php echo PUBLIC_URL; ?>user/explore.php">Explore</a></li>
-                        </br></br></br></br></br></br></br></br></br></br></br></br>
                     <?php endif; ?>
 
                     <li><a href="<?php echo PUBLIC_URL; ?>about.php">About</a></li>
