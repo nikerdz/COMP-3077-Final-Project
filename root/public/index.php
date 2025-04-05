@@ -43,7 +43,7 @@ session_start();
 <body>
 
 
-<!-- Navigation Bar -->
+<!-- Navigation Bar and Side Bar Menu -->
 <?php include_once('../assets/includes/navbar.php'); ?>
 
 <!-- Main Content Section -->

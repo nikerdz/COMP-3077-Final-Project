@@ -17,14 +17,14 @@ if (session_status() === PHP_SESSION_NONE) {
                 data-menu-icon="<?php echo IMG_URL; ?>menu.png"
                 data-logo="<?php echo IMG_URL; ?>logo.png">
 
-                <a href="index.php" class="logo">RecipeHub</a>
+                <a href="<?php echo PUBLIC_URL; ?>index.php" class="logo">RecipeHub</a>
             </div>
 
             <ul class="nav-links">
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <li><a href="user/explore.php">Explore</a></li>
-                    <li><a href="user/profile.php">Profile</a></li>
-                    <li><a href="user/dashboard.php">Dashboard</a></li>
+                    <li><a href="<?php echo USER_URL; ?>explore.php">Explore</a></li>
+                    <li><a href="<?php echo USER_URL; ?>profile.php">Profile</a></li>
+                    <li><a href="<?php echo USER_URL; ?>dashboard.php">Dashboard</a></li>
                     <li><a href="<?php echo PHP_URL; ?>logout_submit.php">Log Out</a></li>
                 <?php else: ?>
                     <li><a href="login.php">Log In</a></li>

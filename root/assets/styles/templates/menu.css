@@ -57,9 +57,10 @@
     flex-direction: column;
 }
 
-.profile-info p {
-    color: white;
+.sidebar-profile .profile-info p {
+    color: white !important;
 }
+
 
 .auth-link,
 .logout-btn {
