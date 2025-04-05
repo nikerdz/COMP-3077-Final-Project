@@ -34,6 +34,24 @@ try {
     $pdo->exec($createUsersTable);
     echo "Users table created successfully or already exists.<br>";
 
+    $createRecipesTable = "
+    CREATE TABLE IF NOT EXISTS recipes (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        description TEXT,
+        image_url VARCHAR(255),
+        cuisine_type VARCHAR(100),
+        difficulty ENUM('Easy', 'Medium', 'Hard'),
+        cooking_time INT,
+        created_by INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (created_by) REFERENCES users(id)
+    ) ENGINE=InnoDB;
+    ";
+    $pdo->exec($createRecipesTable);
+    echo "Recipes table created successfully or already exists.<br>";
+
+
 } catch (PDOException $e) {
     die("Database setup failed: " . $e->getMessage());
 }
