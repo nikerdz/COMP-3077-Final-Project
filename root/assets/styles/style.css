@@ -6,6 +6,7 @@
 @import url('templates/footer.css');
 @import url('templates/form.css');
 @import url('templates/menu.css');
+@import url('templates/profile.css');
 
 /* ==========================
    General Styles 
@@ -171,3 +172,4 @@ body {
         font-size: 0.9rem;
     }
 }
+

@@ -11,6 +11,9 @@ define('USER_URL', BASE_URL . 'public/user/');
 // Path to wiki pages
 define('WIKI_URL', BASE_URL . 'docs/wiki/');
 
+// Path to includes folder
+define('INCLUDES_URL', BASE_URL . 'assets/includes/');
+
 // Path to config folder
 define('CONFIG_URL', BASE_URL . 'config/');
 

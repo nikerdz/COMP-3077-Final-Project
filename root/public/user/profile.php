@@ -4,6 +4,18 @@ require_once('../../config/constants.php');
 
 // Start the session to check if the user is logged in
 session_start();
+// Redirect if not logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: " . PUBLIC_URL . "login.php");
+    exit();
+}
+
+// Extract data from session
+$firstName = htmlspecialchars($_SESSION['first_name']);
+$lastName = htmlspecialchars($_SESSION['last_name']);
+$username = htmlspecialchars($_SESSION['username']);
+$email = htmlspecialchars($_SESSION['email']);
+$profilePic = !empty($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'default.png';
 ?>
 
 <!-- HTML Structure -->
@@ -107,10 +119,23 @@ session_start();
 
 <!-- Main Content Section -->
 <main>
-    <div>
-        <h1>Name's Profile</h1>
+    <div class="profile-section">
+        <div class="profile-card">
+            <div class="profile-image">
+                <img src="<?php echo PROFILES_URL . $profilePic; ?>" alt="Profile Picture">
+            </div>
+
+            <div class="profile-info">
+                <h2><?php echo $username; ?>'s Profile</h2>
+                <p><strong>First Name:</strong> <?php echo $firstName; ?></p>
+                <p><strong>Last Name:</strong> <?php echo $lastName; ?></p>
+                <p><strong>Email:</strong> <?php echo $email; ?></p>
+                <a href="<?php echo USER_URL; ?>edit-profile.php" class="btn">Edit Profile</a>
+            </div>
+        </div>
     </div>
 </main>
+
 
 
 <!-- Footer -->

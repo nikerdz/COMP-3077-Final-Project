@@ -52,8 +52,13 @@
 }
 
 .profile-info {
+    color: white;
     display: flex;
     flex-direction: column;
+}
+
+.profile-info p {
+    color: white;
 }
 
 .auth-link,
