@@ -33,6 +33,20 @@ if (!$recipe) {
 }
 
 $isOwner = $recipe['created_by'] == $_SESSION['user_id'];
+
+$favCountStmt = $pdo->prepare("SELECT COUNT(*) FROM favourites WHERE recipe_id = :id");
+$favCountStmt->execute([':id' => $recipeId]);
+$favCount = $favCountStmt->fetchColumn();
+
+$isFavourited = false;
+if (isset($_SESSION['user_id'])) {
+    $favCheck = $pdo->prepare("SELECT * FROM favourites WHERE user_id = :uid AND recipe_id = :rid");
+    $favCheck->execute([
+        ':uid' => $_SESSION['user_id'],
+        ':rid' => $recipeId
+    ]);
+    $isFavourited = $favCheck->fetch() ? true : false;
+}
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +62,7 @@ $isOwner = $recipe['created_by'] == $_SESSION['user_id'];
     <meta name="robots" content="index, follow"> <!-- Allows search engines to index and follow links -->
 
     <meta property="og:title" content="RecipeHub - Discover & Share Recipes">
-    <meta property="og:description" content="Join RecipeHub and explore a world of delicious recipes. Share your favorites and organize your own recipe collection!">
+    <meta property="og:description" content="Join RecipeHub and explore a world of delicious recipes. Share your favourites and organize your own recipe collection!">
     <meta property="og:image" content="<?php echo IMG_URL; ?>logo.png">
     <meta property="og:url" content="https://yourwebsite.com/index.php">
     <meta property="og:type" content="website"> <!-- Enhance link previews when shared on Facebook, LinkedIn, and other platforms -->
@@ -83,6 +97,12 @@ $isOwner = $recipe['created_by'] == $_SESSION['user_id'];
                 </a>
             </p>
         </div>
+         <!-- Favourite count -->
+         <div class="favourite-section">
+                <button id="fav-btn" class="favourite-btn <?php echo $isFavourited ? 'active' : ''; ?>">
+                    ❤️ <span id="fav-count"><?php echo $favCount; ?></span>
+                </button>
+            </div>
 
         <div class="recipe-meta">
             <p><strong>Meal Type:</strong> <?php echo ucfirst($recipe['meal_type']); ?></p>
@@ -96,9 +116,6 @@ $isOwner = $recipe['created_by'] == $_SESSION['user_id'];
             <?php if ($recipe['vegetarian']) echo '<span class="badge green">Vegetarian</span>'; ?>
             <?php if ($recipe['gluten_free']) echo '<span class="badge orange">Gluten Free</span>'; ?>
             <?php if ($recipe['dairy_free']) echo '<span class="badge blue">Dairy Free</span>'; ?>
-
-            <!-- Favorite count -->
-            <span class="badge" style="background: #e76f51;">❤️ 123</span>
         </div>
 
         <div class="recipe-section">
@@ -111,20 +128,74 @@ $isOwner = $recipe['created_by'] == $_SESSION['user_id'];
             <p><?php echo nl2br(htmlspecialchars($recipe['instructions'])); ?></p>
         </div>
 
-        <!-- Comments Section -->
-        <div class="recipe-section">
-            <h2>Comments</h2>
-            <p><em>Comment system coming soon!</em></p>
-        </div>
-
         <?php if ($isOwner): ?>
             <div style="text-align: right;">
                 <a href="<?php echo RECIPE_URL . 'edit-recipe.php?id=' . $recipe['id']; ?>" class="btn">Edit Recipe</a>
             </div>
         <?php endif; ?>
     </div>
+
+    <!-- Comments Section -->
+    <div class="recipe-comments">
+        <h2>Comments</h2>
+
+        <?php
+        // Fetch existing comments
+        $commentStmt = $pdo->prepare("
+            SELECT comments.*, users.username 
+            FROM comments 
+            JOIN users ON comments.user_id = users.id 
+            WHERE recipe_id = :recipe_id 
+            ORDER BY created_at DESC
+        ");
+        $commentStmt->execute([':recipe_id' => $recipeId]);
+        $comments = $commentStmt->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
+        <!-- Show comments -->
+        <?php if (!empty($comments)): ?>
+            <?php foreach ($comments as $comment): ?>
+                <div class="comment-card">
+                    <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">
+                        <p><?php echo htmlspecialchars($comment['username']); ?></a> says:</p>
+                    
+                    <p><?php echo nl2br(htmlspecialchars($comment['comment'])); ?></p>
+                    <small><?php echo date('F j, Y g:i A', strtotime($comment['created_at'])); ?></small>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No comments yet. Be the first!</p>
+        <?php endif; ?>
+
+        <!-- Comment form -->
+        <form action="<?php echo PHP_URL; ?>comment_submit.php" method="POST" class="comment-form">
+            <textarea name="comment" rows="3" placeholder="Write a comment..." required></textarea>
+            <input type="hidden" name="recipe_id" value="<?php echo $recipeId; ?>">
+            <button type="submit">Post Comment</button>
+        </form>
+    </div>
+
 </main>
 
 <?php include_once('../../assets/includes/footer.php'); ?>
+<script>
+document.getElementById('fav-btn')?.addEventListener('click', () => {
+    fetch('<?php echo PHP_URL; ?>favourite_submit.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'recipe_id=' + <?php echo $recipeId; ?>
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            const btn = document.getElementById('fav-btn');
+            const count = document.getElementById('fav-count');
+            btn.classList.toggle('active', data.favourited);
+            count.textContent = data.count;
+        }
+    });
+});
+</script>
+
 </body>
 </html>

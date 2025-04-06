@@ -24,11 +24,12 @@ $stmt = $pdo->prepare($query);
 $stmt->execute([':userId' => $userId]);
 $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Get favorite recipes for this user
+// Get favourite recipes for this user
 $stmt = $pdo->prepare("
-    SELECT r.*
+    SELECT r.*, u.username
     FROM recipes r
     JOIN favourites f ON r.id = f.recipe_id
+    JOIN users u ON r.created_by = u.id
     WHERE f.user_id = :user_id
     ORDER BY f.favourited_at DESC
 ");
@@ -51,7 +52,7 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="robots" content="index, follow"> <!-- Allows search engines to index and follow links -->
 
     <meta property="og:title" content="RecipeHub - Discover & Share Recipes">
-    <meta property="og:description" content="Join RecipeHub and explore a world of delicious recipes. Share your favorites and organize your own recipe collection!">
+    <meta property="og:description" content="Join RecipeHub and explore a world of delicious recipes. Share your favourites and organize your own recipe collection!">
     <meta property="og:image" content="<?php echo IMG_URL; ?>logo.png">
     <meta property="og:url" content="https://yourwebsite.com/index.php">
     <meta property="og:type" content="website"> <!-- Enhance link previews when shared on Facebook, LinkedIn, and other platforms -->
@@ -135,10 +136,10 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="recipe-section">
         <div class="recipe-posts">
-            <h2>Favorite Recipes</h2>
+            <h2>Favourite Recipes</h2>
             <?php if (empty($favRecipes)): ?>
                 <div style="text-align: center; width: 100%;">
-                    <p>You haven’t favorited any recipes yet.</p>
+                    <p>You haven’t favourited any recipes yet.</p>
                     <br>
                 </div>
             <?php else: ?>
@@ -146,9 +147,15 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php foreach ($favRecipes as $recipe): ?>
                         <div class="recipe-card">
                             <img src="<?php echo htmlspecialchars($recipe['image_url']); ?>" alt="Recipe Image">
-                            <h3><?php echo htmlspecialchars($recipe['title']); ?></h3>
+                                <h3>
+                                    <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-link">
+                                        <?php echo htmlspecialchars($recipe['title']); ?>
+                                    </a>
+                                </h3>
+                                <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">
+                                    By <?php echo htmlspecialchars($recipe['username']); ?>
+                                </a>
                             <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
-                            <a href="<?php echo USER_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="btn">View Recipe</a>
                         </div>
                     <?php endforeach; ?>
                 </div>

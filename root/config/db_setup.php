@@ -55,6 +55,7 @@ try {
         instructions TEXT,
         created_by INT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        favourite_count INT DEFAULT 0,
         FOREIGN KEY (created_by) REFERENCES users(id)
     ) ENGINE=InnoDB;
     ";
@@ -63,11 +64,11 @@ try {
     echo "Recipes table created successfully or already exists.<br>";
 
     $createFavouritesTable = "
-    CREATE TABLE IF NOT EXISTS favorites (
+    CREATE TABLE IF NOT EXISTS favourites (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     recipe_id INT NOT NULL,
-    favorited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    favourited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (recipe_id) REFERENCES recipes(id) ON DELETE CASCADE,
     UNIQUE (user_id, recipe_id)
@@ -77,6 +78,20 @@ try {
     $pdo->exec($createFavouritesTable);
     echo "Favourites table created successfully or already exists.<br>";
 
+    $createCommentsTable = "
+    CREATE TABLE IF NOT EXISTS comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    recipe_id INT NOT NULL,
+    user_id INT NOT NULL,
+    comment TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (recipe_id) REFERENCES recipes(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB;
+    ";
+
+    $pdo->exec($createCommentsTable);
+    echo "Comments table created successfully or already exists.<br>";
 
 } catch (PDOException $e) {
     die("Database setup failed: " . $e->getMessage());

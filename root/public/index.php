@@ -20,7 +20,7 @@ session_start();
     <meta name="robots" content="index, follow"> <!-- Allows search engines to index and follow links -->
 
     <meta property="og:title" content="RecipeHub - Discover & Share Recipes">
-    <meta property="og:description" content="Join RecipeHub and explore a world of delicious recipes. Share your favorites and organize your own recipe collection!">
+    <meta property="og:description" content="Join RecipeHub and explore a world of delicious recipes. Share your favourites and organize your own recipe collection!">
     <meta property="og:image" content="<?php echo IMG_URL; ?>logo.png">
     <meta property="og:url" content="https://yourwebsite.com/index.php">
     <meta property="og:type" content="website"> <!-- Enhance link previews when shared on Facebook, LinkedIn, and other platforms -->
@@ -50,7 +50,7 @@ session_start();
 <main>
     <div class="hero-section">
         <h1>Welcome to RecipeHub!</h1>
-        <p>Discover and share your favorite recipes from around the world.  
+        <p>Discover and share your favourite recipes from around the world.  
         Create your own digital recipe book, explore new cuisines, and connect with fellow cooking enthusiasts.</p>
                 </br>
                 </br>
