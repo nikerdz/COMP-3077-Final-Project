@@ -24,16 +24,34 @@ if ($check->fetch()) {
     // Remove favourite
     $remove = $pdo->prepare("DELETE FROM favourites WHERE user_id = :uid AND recipe_id = :rid");
     $remove->execute([':uid' => $userId, ':rid' => $recipeId]);
+
+    // Decrement favourite_count (make sure it doesn't go below 0)
+    $update = $pdo->prepare("
+        UPDATE recipes 
+        SET favourite_count = GREATEST(favourite_count - 1, 0) 
+        WHERE id = :rid
+    ");
+    $update->execute([':rid' => $recipeId]);
+
     $favourited = false;
 } else {
     // Add favourite
     $add = $pdo->prepare("INSERT INTO favourites (user_id, recipe_id) VALUES (:uid, :rid)");
     $add->execute([':uid' => $userId, ':rid' => $recipeId]);
+
+    // Increment favourite_count
+    $update = $pdo->prepare("
+        UPDATE recipes 
+        SET favourite_count = favourite_count + 1 
+        WHERE id = :rid
+    ");
+    $update->execute([':rid' => $recipeId]);
+
     $favourited = true;
 }
 
-// Get updated count
-$countStmt = $pdo->prepare("SELECT COUNT(*) FROM favourites WHERE recipe_id = :rid");
+// Get updated count (optional, since we just updated it, but useful if something went wrong)
+$countStmt = $pdo->prepare("SELECT favourite_count FROM recipes WHERE id = :rid");
 $countStmt->execute([':rid' => $recipeId]);
 $count = $countStmt->fetchColumn();
 

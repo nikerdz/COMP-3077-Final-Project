@@ -82,9 +82,7 @@ $recipes = $recipesStmt->fetchAll(PDO::FETCH_ASSOC);
 
                     <?php
                         // Fetch favourite count for each recipe
-                        $favCountStmt = $pdo->prepare("SELECT COUNT(*) FROM favourites WHERE recipe_id = :rid");
-                        $favCountStmt->execute([':rid' => $recipe['id']]);
-                        $favCount = $favCountStmt->fetchColumn();
+                        $favCount = $recipe['favourite_count'] ?? 0;
                         ?>
 
                     <div class="recipe-card">
@@ -92,7 +90,7 @@ $recipes = $recipesStmt->fetchAll(PDO::FETCH_ASSOC);
                         <h3><a class="recipe-link" href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>">
                             <?php echo htmlspecialchars($recipe['title']); ?>
                         </a></h3>
-                        <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                        <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
                         <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
                     </div>
                 <?php endforeach; ?>

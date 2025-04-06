@@ -3,7 +3,7 @@ require_once('../../../config/constants.php');
 require_once('../../../config/db_config.php');
 
 $apiKey = 'b808dba1f3e0483ba84aeee37ced3394'; // Replace with your actual API key
-$numberOfRecipes = 50; // Number of recipes to fetch
+$numberOfRecipes = 100; // Number of recipes to fetch
 $apiUrl = "https://api.spoonacular.com/recipes/random?number={$numberOfRecipes}&apiKey={$apiKey}";
 
 $response = file_get_contents($apiUrl);

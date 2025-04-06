@@ -139,8 +139,7 @@
     margin-bottom: 10px;
 }
 
-.recipe-card h3 {
-    font-size: 1.3rem;
+.recipe-card h4 {
     margin-bottom: 5px;
 }
 
@@ -148,13 +147,13 @@
     margin-bottom: 15px;
 }
 
-.recipe-card h3 a.recipe-link {
+.recipe-card h4 a.recipe-link {
     text-decoration: none;
     color: #333;
     transition: color 0.3s;
 }
 
-.recipe-card h3 a.recipe-link:hover {
+.recipe-card h4 a.recipe-link:hover {
     color: #ff7fa8;
 }
 

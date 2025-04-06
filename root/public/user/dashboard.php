@@ -116,6 +116,11 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php if (!empty($recentlyViewedRecipes)): ?>
             <div class="recipe-grid">
                 <?php foreach ($recentlyViewedRecipes as $recipe): ?>
+                    <?php
+                    // Fetch favourite count for each recipe
+                        $favCount = $recipe['favourite_count'] ?? 0;
+                        ?>
+
                     <div class="recipe-card">
                         <img src="<?php echo htmlspecialchars($recipe['image_url'] ?? IMG_URL . 'thumbnails/default.png'); ?>" alt="Recipe Image">
                         <h4>
@@ -123,7 +128,9 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php echo htmlspecialchars($recipe['title']); ?>
                             </a>
                         </h4>
+                        <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
                         <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                        <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -170,6 +177,10 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php if (!empty($randomRecipes)): ?>
             <div class="recipe-grid">
                 <?php foreach ($randomRecipes as $recipe): ?>
+                    <?php
+                    // Fetch favourite count for each recipe
+                        $favCount = $recipe['favourite_count'] ?? 0;
+                        ?>
                     <div class="recipe-card">
                         <img src="<?php echo htmlspecialchars($recipe['image_url'] ?? IMG_URL . 'thumbnails/default.png'); ?>" alt="Suggested Recipe">
                         <h4>
@@ -177,7 +188,9 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php echo htmlspecialchars($recipe['title']); ?>
                             </a>
                         </h4>
+                        <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
                         <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                        <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
                     </div>
                 <?php endforeach; ?>
             </div>

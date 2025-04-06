@@ -63,7 +63,7 @@ $categories = [
 
     <?php
     $categories = [
-        "Featured Recipes" => "SELECT * FROM recipes ORDER BY RAND() LIMIT 5",
+        "Featured Recipes" => "SELECT * FROM recipes WHERE favourite_count > 5 ORDER BY favourite_count DESC LIMIT 5",
         "User-Created Recipes" => "SELECT * FROM recipes WHERE is_api = 0 ORDER BY created_at DESC LIMIT 5",
         "Vegetarian Delights" => "SELECT * FROM recipes WHERE vegetarian = 1 ORDER BY RAND() LIMIT 5",     
         "Gluten-Free Goodness" => "SELECT * FROM recipes WHERE gluten_free = 1 ORDER BY RAND() LIMIT 5",
@@ -82,6 +82,11 @@ $categories = [
             </div>
             <div class="explore-row">
                 <?php foreach ($recipes as $recipe): ?>
+                    <?php
+                    // Fetch favourite count for each recipe
+                        $favCount = $recipe['favourite_count'] ?? 0;
+                        ?>
+
                     <div class="recipe-card">
                         <img src="<?php echo htmlspecialchars($recipe['image_url'] ?? IMG_URL . 'thumbnails/default.png'); ?>" alt="Recipe Image">
                         <h4>
@@ -89,7 +94,9 @@ $categories = [
                                 <?php echo htmlspecialchars($recipe['title']); ?>
                             </a>
                         </h4>
-                        <p><strong>Time:</strong> <?php echo $recipe['ready_in_minutes']; ?> mins</p>
+                        <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
+                        <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                        <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
                     </div>
                 <?php endforeach; ?>
             </div>

@@ -34,9 +34,7 @@ if (!$recipe) {
 
 $isOwner = $recipe['created_by'] == $_SESSION['user_id'];
 
-$favCountStmt = $pdo->prepare("SELECT COUNT(*) FROM favourites WHERE recipe_id = :id");
-$favCountStmt->execute([':id' => $recipeId]);
-$favCount = $favCountStmt->fetchColumn();
+$favCount = $recipe['favourite_count'] ?? 0;
 
 $isFavourited = false;
 if (isset($_SESSION['user_id'])) {

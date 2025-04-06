@@ -67,6 +67,10 @@
     object-fit: cover;
 }
 
+.recipe-card p {
+    color: grey;
+}
+
 .recipe-title-link {
     text-decoration: none;
     color: #333;

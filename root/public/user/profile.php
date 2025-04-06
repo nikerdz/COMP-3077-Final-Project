@@ -126,18 +126,17 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         }
 
                         // Fetch favourite count for each recipe
-                        $favCountStmt = $pdo->prepare("SELECT COUNT(*) FROM favourites WHERE recipe_id = :rid");
-                        $favCountStmt->execute([':rid' => $recipe['id']]);
-                        $favCount = $favCountStmt->fetchColumn();
+                        $favCount = $recipe['favourite_count'] ?? 0;
                         ?>
                         <div class="recipe-card">
                             <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Recipe Image">
-                            <h3>
+                            <h4>
                                 <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-link">
                                     <?php echo htmlspecialchars($recipe['title']); ?>
                                 </a>
-                            </h3>
-                            <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                            </h4>
+                            <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
+                            <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
                             <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
                         </div>
                     <?php endforeach; ?>
@@ -178,21 +177,20 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         }
 
                         // Fetch favourite count for each recipe
-                        $favCountStmt = $pdo->prepare("SELECT COUNT(*) FROM favourites WHERE recipe_id = :rid");
-                        $favCountStmt->execute([':rid' => $recipe['id']]);
-                        $favCount = $favCountStmt->fetchColumn();
+                        $favCount = $recipe['favourite_count'] ?? 0;
                         ?>
                         <div class="recipe-card">
                             <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Recipe Image">
-                            <h3>
+                            <h4>
                                 <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-link">
                                     <?php echo htmlspecialchars($recipe['title']); ?>
                                 </a>
-                            </h3>
+                            </h4>
                             <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">
                                 By <?php echo htmlspecialchars($recipe['username']); ?>
                             </a>
-                            <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                            <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
+                            <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
                             <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
                         </div>
                     <?php endforeach; ?>

@@ -15,7 +15,10 @@
 }
 
 .settings-card h2 {
-    font-size: 1.8rem;
+    font-weight: normal;
+    font-family: "Just Another Hand", cursive;
+    letter-spacing: 0.1px;
+    font-size: 2.8rem;
     margin-bottom: 20px;
     color: #6c5b7b;
 }
