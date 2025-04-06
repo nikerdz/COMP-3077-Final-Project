@@ -50,7 +50,7 @@ session_start();
 <!-- Main Content Section -->
 <main>
     <div>
-        <h1>Explore Recipes Around the World!</h1>
+        <h1>Explore Recipes From Around the World!</h1>
     </div>
 
     <div>

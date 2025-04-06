@@ -74,7 +74,7 @@ $aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
 
         <!-- Change Password -->
         <section class="settings-card">
-            <h2>Change Password</h2>
+            <h2 style="text-align: center;">Change Password</h2>
             <form action="<?php echo PHP_URL; ?>change_pass_submit.php" method="POST" class="contact-form">
                 <label for="current_password">Current Password:</label>
                 <input type="password" id="current_password" name="current_password" required>
@@ -88,7 +88,7 @@ $aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
 
         <!-- Change Theme -->
         <section class="settings-card">
-            <h2>Change Site Theme</h2>
+            <h2 style="text-align: center;">Change Site Theme</h2>
             <div class="theme-options">
 
                 <div class="theme-choice">

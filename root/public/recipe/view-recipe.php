@@ -61,6 +61,19 @@ $imageUrlRaw = $recipe['image_url'] ?? '';
         $imagePath = IMG_URL . 'thumbnails/' . ($imageUrlRaw ?: 'default.png'); // fallback to default
     }
 
+if (!isset($_SESSION['recently_viewed'])) {
+    $_SESSION['recently_viewed'] = [];
+}
+
+// Remove if already exists to avoid duplicates
+$_SESSION['recently_viewed'] = array_filter($_SESSION['recently_viewed'], fn($id) => $id !== $recipeId);
+
+// Add current recipe to the beginning
+array_unshift($_SESSION['recently_viewed'], $recipeId);
+
+// Keep only the last 3
+$_SESSION['recently_viewed'] = array_slice($_SESSION['recently_viewed'], 0, 3);
+
 
 ?>
 
@@ -172,7 +185,7 @@ $imageUrlRaw = $recipe['image_url'] ?? '';
         <?php if (!empty($comments)): ?>
             <?php foreach ($comments as $comment): ?>
                 <div class="comment-card">
-                    <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">
+                    <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($comment['username']); ?>" class="author-link">
                         <p><?php echo htmlspecialchars($comment['username']); ?></a> says:</p>
                     
                     <p><?php echo nl2br(htmlspecialchars($comment['comment'])); ?></p>

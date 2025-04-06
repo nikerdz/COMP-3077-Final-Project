@@ -1,10 +1,64 @@
 <?php
 // Include the constants.php file
 require_once('../../config/constants.php');
-
-// Start the session to check if the user is logged in
+require_once('../../config/db_config.php');
 session_start();
+
+$recentlyViewedRecipes = [];
+
+if (!empty($_SESSION['recently_viewed'])) {
+    $placeholders = implode(',', array_fill(0, count($_SESSION['recently_viewed']), '?'));
+    $stmt = $pdo->prepare("SELECT * FROM recipes WHERE id IN ($placeholders)");
+    $stmt->execute($_SESSION['recently_viewed']);
+    $fetched = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Preserve order based on ID array
+    $recentlyViewedRecipes = [];
+    foreach ($_SESSION['recently_viewed'] as $id) {
+        foreach ($fetched as $recipe) {
+            if ($recipe['id'] == $id) {
+                $recentlyViewedRecipes[] = $recipe;
+                break;
+            }
+        }
+    }
+}
+
+$userId = $_SESSION['user_id'];
+$username = htmlspecialchars($_SESSION['username']);
+$firstName = htmlspecialchars($_SESSION['first_name']);
+$profilePic = !empty($_SESSION['profile_pic']) ? PROFILES_URL . $_SESSION['profile_pic'] : IMG_URL . 'profile.png';
+
+// Fetch most recent recipe
+$recentRecipeStmt = $pdo->prepare("SELECT * FROM recipes WHERE created_by = :uid ORDER BY created_at DESC LIMIT 1");
+$recentRecipeStmt->execute([':uid' => $userId]);
+$recentRecipe = $recentRecipeStmt->fetch(PDO::FETCH_ASSOC);
+
+// Fetch recent comments on user's recipes
+$commentsStmt = $pdo->prepare("
+    SELECT c.*, u.username AS commenter, r.title AS recipe_title, r.id AS recipe_id
+    FROM comments c
+    JOIN recipes r ON c.recipe_id = r.id
+    JOIN users u ON c.user_id = u.id
+    WHERE r.created_by = :uid
+    ORDER BY c.created_at DESC
+    LIMIT 3
+");
+$commentsStmt->execute([':uid' => $userId]);
+$recentComments = $commentsStmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Fetch 3 random recipes the user didn't create
+$stmt = $pdo->prepare("
+    SELECT * FROM recipes 
+    WHERE created_by != :user_id 
+    ORDER BY RAND() 
+    LIMIT 3
+");
+$stmt->execute([':user_id' => $_SESSION['user_id']]);
+$randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
+
 
 <!-- HTML Structure -->
 <!DOCTYPE html>
@@ -48,10 +102,86 @@ session_start();
 
 
 <!-- Main Content Section -->
-<main>
-    <div>
-        <h1>Name's Dashboard</h1>
-    </div>
+<section class="hero-section less-hero">
+        <div class="dashboard-profile">
+                <img src="<?php echo $profilePic ?>" alt="Profile Picture" width="500" height="600">
+            </div>
+        <h1>Welcome back, <?php echo $firstName; ?></h1>
+        <p>Here's what’s cooking today!</p>
+</section>
+
+<main class="dashboard-container">
+    <section class="dashboard-section">
+        <h3 style="text-align: center;">Recently Viewed Recipes</h3>
+        <?php if (!empty($recentlyViewedRecipes)): ?>
+            <div class="recipe-grid">
+                <?php foreach ($recentlyViewedRecipes as $recipe): ?>
+                    <div class="recipe-card">
+                        <img src="<?php echo htmlspecialchars($recipe['image_url'] ?? IMG_URL . 'thumbnails/default.png'); ?>" alt="Recipe Image">
+                        <h4>
+                            <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-title-link">
+                                <?php echo htmlspecialchars($recipe['title']); ?>
+                            </a>
+                        </h4>
+                        <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <p>You haven’t viewed any recipes yet.</p>
+        <?php endif; ?>
+    </section>
+
+    <section class="dashboard-section">
+        <h3>Quick Links</h3>
+        <div class="dashboard-links">
+            <a href="<?php echo RECIPE_URL; ?>user-recipes.php?username=<?php echo urlencode($username); ?>" class="btn">My Recipes</a>
+            <a href="<?php echo RECIPE_URL; ?>favourite-recipes.php?username=<?php echo urlencode($username); ?>" class="btn">My Favourites</a>
+            <a href="<?php echo RECIPE_URL; ?>add-recipe.php" class="btn">Post Recipe</a>
+            <a href="<?php echo USER_URL; ?>edit-profile.php" class="btn">Edit Profile</a>
+            <a href="<?php echo USER_URL; ?>user-settings.php" class="btn">Settings</a>
+        </div>
+    </section>
+
+    <section class="dashboard-comments">
+        <h3>Recent Comments on Your Recipes</h3>
+        <?php if (!empty($recentComments)): ?>
+            <?php foreach ($recentComments as $comment): ?>
+                <div class="comment-card">
+                    <p><strong><?php echo htmlspecialchars($comment['commenter']); ?></strong> on 
+                        <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $comment['recipe_id']; ?>" class="comment-card-link">
+                            <?php echo htmlspecialchars($comment['recipe_title']); ?>
+                        </a>:
+                    </p>
+                    <p><?php echo nl2br(htmlspecialchars($comment['comment'])); ?></p>
+                    <small><?php echo date('F j, Y g:i A', strtotime($comment['created_at'])); ?></small>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No comments yet. Keep sharing your recipes!</p>
+        <?php endif; ?>
+    </section>
+
+    <section class="dashboard-section">
+        <h3>Recipes You Might Like</h3>
+        <?php if (!empty($randomRecipes)): ?>
+            <div class="recipe-grid">
+                <?php foreach ($randomRecipes as $recipe): ?>
+                    <div class="recipe-card">
+                        <img src="<?php echo htmlspecialchars($recipe['image_url'] ?? IMG_URL . 'thumbnails/default.png'); ?>" alt="Suggested Recipe">
+                        <h4>
+                            <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-title-link">
+                                <?php echo htmlspecialchars($recipe['title']); ?>
+                            </a>
+                        </h4>
+                        <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <p style="text-align: center;">No suggestions available right now.</p>
+        <?php endif; ?>
+    </section>
 </main>
 
 

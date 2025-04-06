@@ -18,7 +18,7 @@ $userId = $user['id'];
 $firstName = htmlspecialchars($user['first_name']);
 $lastName = htmlspecialchars($user['last_name']);
 $username = htmlspecialchars($user['username']);
-$profilePic = !empty($user['profile_pic']) ? PROFILES_URL . $user['profile_pic'] : IMG_URL . 'profile.png';
+$otherUserProfilePic = !empty($user['profile_pic']) ? PROFILES_URL . $user['profile_pic'] : IMG_URL . 'profile.png';
 $aboutMe = htmlspecialchars($user['about_me'] ?? '');
 
 // Get recipes posted by this user
@@ -42,6 +42,7 @@ if (!$user) {
     echo "User not found.";
     exit();
 }
+
 ?>
 
 <!-- HTML Structure -->
@@ -90,17 +91,18 @@ if (!$user) {
     <div class="profile-section">
         <div class="profile-card">
             <div class="profile-image">
-                <img src="<?php echo $profilePic ?>" alt="Profile Picture">
+                <img src="<?php echo $otherUserProfilePic . '?v=' . time(); ?>" alt="Profile Picture">
             </div>
 
             <div class="profile-info">
                 <h2><?php echo $username; ?>'s Profile</h2>
                 <p><strong>Name:</strong> <?php echo $firstName; ?> <?php echo $lastName; ?></p>
-                <?php if (!empty($_SESSION['about_me'])): ?>
-                    <p><strong>About Me:</strong> <?php echo nl2br(htmlspecialchars($_SESSION['about_me'])); ?></p>
+                <?php if (!empty($aboutMe)): ?>
+                    <p><strong>About Me:</strong> <?php echo nl2br($aboutMe); ?></p>
                 <?php else: ?>
                     <p><strong>About Me:</strong> <em>No bio yet.</em></p>
                 <?php endif; ?>
+
             </div>
         </div>
     </div>
