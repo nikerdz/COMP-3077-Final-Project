@@ -8,6 +8,9 @@ define('PUBLIC_URL', BASE_URL . 'public/');
 // Path to user html/php files
 define('USER_URL', BASE_URL . 'public/user/');
 
+// Path to recipe html/php files
+define('RECIPE_URL', BASE_URL . 'public/recipe/');
+
 // Path to wiki pages
 define('WIKI_URL', BASE_URL . 'docs/wiki/');
 

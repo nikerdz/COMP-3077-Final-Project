@@ -7,7 +7,8 @@
 @import url('templates/form.css');
 @import url('templates/menu.css');
 @import url('templates/profile.css');
-@import url(templates/settings.css);
+@import url('templates/settings.css');
+@import url('templates/recipe.css');
 
 /* ==========================
    General Styles 
@@ -68,7 +69,7 @@ body {
 }
 
 .btn:hover {
-    background: #355c7d;
+    background: #f4a261;
     transform: scale(1.05);
 }
 

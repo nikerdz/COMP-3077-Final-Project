@@ -1,6 +1,7 @@
 <?php
 // Include the constants.php file
 require_once('../../config/constants.php');
+require_once('../../config/db_config.php');
 
 // Start the session to check if the user is logged in
 session_start();
@@ -17,6 +18,24 @@ $username = htmlspecialchars($_SESSION['username']);
 $email = htmlspecialchars($_SESSION['email']);
 $profilePic = !empty($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'default.png';
 $aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
+
+$userId = $_SESSION['user_id'];
+$query = "SELECT * FROM recipes WHERE created_by = :userId ORDER BY created_at DESC";
+$stmt = $pdo->prepare($query);
+$stmt->execute([':userId' => $userId]);
+$recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Get favorite recipes for this user
+$stmt = $pdo->prepare("
+    SELECT r.*
+    FROM recipes r
+    JOIN favourites f ON r.id = f.recipe_id
+    WHERE f.user_id = :user_id
+    ORDER BY f.favourited_at DESC
+");
+$stmt->execute(['user_id' => $_SESSION['user_id']]);
+$favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!-- HTML Structure -->
@@ -84,6 +103,56 @@ $aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
             </div>
         </div>
     </div>
+
+    <div class="recipe-section">
+        <div class="recipe-posts">
+            <h2>Posted Recipes</h2>
+
+            <?php if (empty($recipes)): ?>
+                <div style="text-align: center; width: 100%;">
+                    <p>You haven’t posted any recipes yet.</p>
+                    <br> <br>
+                    <a href="<?php echo RECIPE_URL; ?>add-recipe.php" class="btn">Post a Recipe</a>
+                </div>
+            <?php else: ?>
+                <div class="recipe-grid">
+                    <?php foreach ($recipes as $recipe): ?>
+                        <div class="recipe-card">
+                            <img src="<?php echo htmlspecialchars($recipe['image_url']); ?>" alt="Recipe Image">
+                            <h3><?php echo htmlspecialchars($recipe['title']); ?></h3>
+                            <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                            <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="btn">View Recipe</a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    <div class="recipe-section">
+        <div class="recipe-posts">
+            <h2>Favorite Recipes</h2>
+            <?php if (empty($favRecipes)): ?>
+                <div style="text-align: center; width: 100%;">
+                    <p>You haven’t favorited any recipes yet.</p>
+                    <br>
+                </div>
+            <?php else: ?>
+                <div class="recipe-grid">
+                    <?php foreach ($favRecipes as $recipe): ?>
+                        <div class="recipe-card">
+                            <img src="<?php echo htmlspecialchars($recipe['image_url']); ?>" alt="Recipe Image">
+                            <h3><?php echo htmlspecialchars($recipe['title']); ?></h3>
+                            <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                            <a href="<?php echo USER_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="btn">View Recipe</a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+
+    
 </main>
 
 

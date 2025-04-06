@@ -50,8 +50,24 @@ try {
         FOREIGN KEY (created_by) REFERENCES users(id)
     ) ENGINE=InnoDB;
     ";
+
     $pdo->exec($createRecipesTable);
     echo "Recipes table created successfully or already exists.<br>";
+
+    $createFavouritesTable = "
+    CREATE TABLE IF NOT EXISTS favorites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    recipe_id INT NOT NULL,
+    favorited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (recipe_id) REFERENCES recipes(id) ON DELETE CASCADE,
+    UNIQUE (user_id, recipe_id)
+    ) ENGINE=InnoDB;
+    ";
+
+    $pdo->exec($createFavouritesTable);
+    echo "Favourites table created successfully or already exists.<br>";
 
 
 } catch (PDOException $e) {

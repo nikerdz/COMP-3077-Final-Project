@@ -62,13 +62,13 @@ $aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
 
 <!-- Main Content Section -->
 <main>
-<?php if (isset($_GET['password'])): ?>
-    <?php if ($_GET['password'] === 'success'): ?>
-        <script>alert("Password updated successfully!");</script>
-    <?php elseif ($_GET['password'] === 'wrong'): ?>
-        <script>alert("Incorrect current password. Please try again.");</script>
+    <?php if (isset($_GET['password'])): ?>
+        <?php if ($_GET['password'] === 'success'): ?>
+            <script>alert("Password updated successfully!");</script>
+        <?php elseif ($_GET['password'] === 'wrong'): ?>
+            <script>alert("Incorrect current password. Please try again.");</script>
+        <?php endif; ?>
     <?php endif; ?>
-<?php endif; ?>
 
     <div class="settings-section">
 

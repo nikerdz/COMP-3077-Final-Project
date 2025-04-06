@@ -63,6 +63,10 @@ $aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
 
 <!-- Main Content Section -->
 <main>
+    <?php if (isset($_GET['update']) && $_GET['update'] === 'success'): ?>
+        <script>alert("Your profile has been updated successfully!");</script>
+    <?php endif; ?>
+
     <div class="profile-section">
         <form action="<?php echo PHP_URL; ?>edit_profile_submit.php" method="POST" enctype="multipart/form-data" class="contact-form">
             <p>Edit Your Profile</p>
