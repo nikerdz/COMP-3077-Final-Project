@@ -147,8 +147,8 @@ if (!$user) {
 
                 <?php if (count($recipes) > 4): ?>
                     <div style="text-align: center; margin-top: 20px;">
-                        <a href="<?php echo USER_URL . 'user-recipes.php?username=' . urlencode($username); ?>" class="btn">
-                            View All <?php echo $username; ?>'s Recipes
+                        <a href="<?php echo RECIPE_URL . 'user-recipes.php?username=' . urlencode($username); ?>" class="btn">
+                            View All of <?php echo $username; ?>'s Recipes
                         </a>
                     </div>
                 <?php endif; ?>
@@ -202,8 +202,8 @@ if (!$user) {
 
                 <?php if (count($favRecipes) > 4): ?>
                     <div style="text-align: center; margin-top: 20px;">
-                        <a href="<?php echo USER_URL . 'user-favourites.php?username=' . urlencode($username); ?>" class="btn">
-                            View All <?php echo $username; ?>'s Favourites
+                        <a href="<?php echo RECIPE_URL . 'favourite-recipes.php?username=' . urlencode($username); ?>" class="btn">
+                            View All of <?php echo $username; ?>'s Favourites
                         </a>
                     </div>
                 <?php endif; ?>

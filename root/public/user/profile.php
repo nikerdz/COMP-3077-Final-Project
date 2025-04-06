@@ -200,7 +200,7 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <?php if (count($favRecipes) > 4): ?>
                     <div style="text-align: center; margin-top: 20px;">
-                        <a href="<?php echo USER_URL . 'favourite-recipes.php?username=' . urlencode($username); ?>" class="btn">
+                        <a href="<?php echo RECIPE_URL . 'favourite-recipes.php?username=' . urlencode($username); ?>" class="btn">
                             View All My Favourites
                         </a>
                     </div>

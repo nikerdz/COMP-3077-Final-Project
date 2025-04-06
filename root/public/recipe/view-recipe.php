@@ -119,7 +119,8 @@ $imageUrlRaw = $recipe['image_url'] ?? '';
                 </button>
             </div>
 
-        <div class="recipe-meta">
+        <div class="recipe-meta" style="justify-content:center;">
+            <p><strong>Cuisine:</strong> <?php echo ucfirst($recipe['cuisine_type']); ?></p>
             <p><strong>Meal Type:</strong> <?php echo ucfirst($recipe['meal_type']); ?></p>
             <p><strong>Servings:</strong> <?php echo $recipe['servings']; ?></p>
             <p><strong>Prep Time:</strong> <?php echo $recipe['preparation_time']; ?> mins</p>
