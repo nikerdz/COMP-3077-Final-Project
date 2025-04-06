@@ -35,7 +35,7 @@ session_start();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Just+Another+Hand&display=swap" rel="stylesheet">
 
-    <title>RecipeHub | Contact</title>
+    <title>RecipeHub | Contact Us</title>
 
     <link rel="stylesheet" href="<?php echo CSS_URL; ?>?v=<?php echo time(); ?>"> <!-- Disable caching of style.css so I can properly load the changes I make -->
     <script src="<?php echo JS_URL; ?>script.js?v=<?php echo time(); ?>"></script>

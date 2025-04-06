@@ -27,8 +27,9 @@ try {
             username VARCHAR(50) NOT NULL UNIQUE,
             email VARCHAR(100) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            profile_pic VARCHAR(255) DEFAULT 'default.png'
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            profile_pic VARCHAR(255) DEFAULT 'default.png',
+            about_me TEXT DEFAULT NULL
         ) ENGINE=InnoDB;
     ";
 

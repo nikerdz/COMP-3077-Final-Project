@@ -14,9 +14,10 @@ $profilePic = isset($_SESSION['user_id']) && !empty($_SESSION['profile_pic'])
         <li><a href="<?php echo PUBLIC_URL; ?>index.php">Home</a></li>
 
         <?php if (isset($_SESSION['user_id'])): ?>
-            <li><a href="<?php echo PUBLIC_URL; ?>user/dashboard.php">Dashboard</a></li>
-            <li><a href="<?php echo PUBLIC_URL; ?>user/profile.php">Profile</a></li>
-            <li><a href="<?php echo PUBLIC_URL; ?>user/explore.php">Explore</a></li>
+            <li><a href="<?php echo USER_URL; ?>dashboard.php">Dashboard</a></li>
+            <li><a href="<?php echo USER_URL; ?>explore.php">Explore</a></li>
+            <li><a href="<?php echo USER_URL; ?>profile.php">Profile</a></li>
+            <li><a href="<?php echo USER_URL; ?>user-settings.php">Settings</a></li>
         <?php endif; ?>
 
         <li><a href="<?php echo PUBLIC_URL; ?>about.php">About</a></li>

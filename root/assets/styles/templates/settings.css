@@ -1,0 +1,40 @@
+.settings-section {
+    padding: 60px 20px;
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.settings-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.settings-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #6c5b7b;
+}
+
+.theme-options {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.theme-choice {
+    text-align: center;
+    flex: 1 1 30%;
+}
+
+.theme-choice img {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}

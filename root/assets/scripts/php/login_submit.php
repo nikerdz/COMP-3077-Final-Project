@@ -28,7 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['first_name'] = $user['first_name'];
             $_SESSION['last_name'] = $user['last_name'];
             $_SESSION['email'] = $user['email'];
-            $_SESSION['profile_pic'] = $user['profile_pic'];
+            $_SESSION['profile_pic'] = $user['profile_pic'] ?? 'default.png';
+            $_SESSION['about_me'] = $user['about_me'];
 
             // Redirect to the user dashboard
             header('Location: ' . PUBLIC_URL . 'user/dashboard.php');

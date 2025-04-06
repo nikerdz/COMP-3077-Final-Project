@@ -1,7 +1,6 @@
 <?php
 // Include the constants.php file
 require_once('../../config/constants.php');
-require_once('../../config/db_config.php');
 
 // Start the session to check if the user is logged in
 session_start();
@@ -49,7 +48,7 @@ $aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Just+Another+Hand&display=swap" rel="stylesheet">
 
-    <title>RecipeHub | Edit Profile</title>
+    <title>RecipeHub | User Settings</title>
 
     <link rel="stylesheet" href="<?php echo CSS_URL; ?>?v=<?php echo time(); ?>"> <!-- Disable caching of style.css so I can properly load the changes I make -->
     <script src="<?php echo JS_URL; ?>script.js?v=<?php echo time(); ?>"></script>
@@ -63,36 +62,59 @@ $aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
 
 <!-- Main Content Section -->
 <main>
-    <div class="profile-section">
-        <form action="<?php echo PHP_URL; ?>edit_profile_submit.php" method="POST" enctype="multipart/form-data" class="contact-form">
-            <p>Edit Your Profile</p>
-            </br>
+<?php if (isset($_GET['password'])): ?>
+    <?php if ($_GET['password'] === 'success'): ?>
+        <script>alert("Password updated successfully!");</script>
+    <?php elseif ($_GET['password'] === 'wrong'): ?>
+        <script>alert("Incorrect current password. Please try again.");</script>
+    <?php endif; ?>
+<?php endif; ?>
 
-            <!-- Profile Picture Upload Preview + Trigger -->
-            <div style="text-align: center; margin-bottom: 20px;">
-                <div class="profile-image">
-                    <img src="<?php echo $profilePic; ?>" alt="Profile Picture" id="previewImage">
+    <div class="settings-section">
+
+        <!-- Change Password -->
+        <section class="settings-card">
+            <h2>Change Password</h2>
+            <form action="<?php echo PHP_URL; ?>change_pass_submit.php" method="POST" class="contact-form">
+                <label for="current_password">Current Password:</label>
+                <input type="password" id="current_password" name="current_password" required>
+
+                <label for="new_password">New Password:</label>
+                <input type="password" id="new_password" name="new_password" required>
+
+                <button type="submit" class="btn">Update Password</button>
+            </form>
+        </section>
+
+        <!-- Change Theme -->
+        <section class="settings-card">
+            <h2>Change Site Theme</h2>
+            <div class="theme-options">
+
+                <div class="theme-choice">
+                    <img src="<?php echo IMG_URL; ?>logo.png" alt="Pink Theme" />
+                    <form method="POST" action="#">
+                        <button class="btn">Pink (Default)</button>
+                    </form>
                 </div>
 
-                <input type="file" id="pfpInput" name="profile_pic" accept="image/*" style="display: none;">
-                <button type="button" class="btn" style="background: #6c5b7b;" onclick="document.getElementById('pfpInput').click();">Upload New Profile Picture</button>
-                <?php if (isset($_GET['pfp']) && $_GET['pfp'] === 'success'): ?>
-                    <script>alert("Profile picture uploaded successfully!");</script>
-                <?php endif; ?>
+                <div class="theme-choice">
+                    <img src="<?php echo IMG_URL; ?>logo2.png" alt="Blue Theme" />
+                    <form method="POST" action="#">
+                        <button class="btn">Blue Theme</button>
+                    </form>
+                </div>
+
+                <div class="theme-choice">
+                    <img src="<?php echo IMG_URL; ?>logo3.png" alt="Green Theme" />
+                    <form method="POST" action="#">
+                        <button class="btn">Green Theme</button>
+                    </form>
+                </div>
 
             </div>
+        </section>
 
-            <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="first_name" value="<?php echo $firstName; ?>" required>
-
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name" value="<?php echo $lastName; ?>" required>
-
-            <label for="about_me">About Me:</label>
-            <textarea id="about_me" name="about_me" rows="5"><?php echo $aboutMe; ?></textarea>
-
-            <button type="submit">Save Changes</button>
-        </form>
     </div>
 </main>
 

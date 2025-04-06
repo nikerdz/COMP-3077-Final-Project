@@ -16,6 +16,7 @@ $lastName = htmlspecialchars($_SESSION['last_name']);
 $username = htmlspecialchars($_SESSION['username']);
 $email = htmlspecialchars($_SESSION['email']);
 $profilePic = !empty($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'default.png';
+$aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
 ?>
 
 <!-- HTML Structure -->
@@ -64,20 +65,26 @@ $profilePic = !empty($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'def
     <div class="profile-section">
         <div class="profile-card">
             <div class="profile-image">
-                <img src="<?php echo PROFILES_URL . $profilePic; ?>" alt="Profile Picture">
+                <img src="<?php echo $profilePic ?>" alt="Profile Picture">
             </div>
 
             <div class="profile-info">
                 <h2><?php echo $username; ?>'s Profile</h2>
-                <p><strong>First Name:</strong> <?php echo $firstName; ?></p>
-                <p><strong>Last Name:</strong> <?php echo $lastName; ?></p>
+                <p><strong>Name:</strong> <?php echo $firstName; ?> <?php echo $lastName; ?></p>
                 <p><strong>Email:</strong> <?php echo $email; ?></p>
-                <a href="<?php echo USER_URL; ?>edit-profile.php" class="btn">Edit Profile</a>
+                <?php if (!empty($_SESSION['about_me'])): ?>
+                    <p><strong>About Me:</strong> <?php echo nl2br(htmlspecialchars($_SESSION['about_me'])); ?></p>
+                <?php else: ?>
+                    <p><strong>About Me:</strong> <em>No bio yet.</em></p>
+                <?php endif; ?>
+                <div class="profile-actions">
+                    <a href="<?php echo USER_URL; ?>edit-profile.php" class="btn">Edit Profile</a>
+                    <a href="<?php echo USER_URL; ?>user-settings.php" class="btn">User Settings</a>
+                </div>
             </div>
         </div>
     </div>
 </main>
-
 
 
 <!-- Footer -->

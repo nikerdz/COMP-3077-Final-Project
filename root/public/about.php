@@ -72,7 +72,6 @@ session_start();
 </main>
 
 
-
 <!-- Footer -->
 <?php include_once('../assets/includes/footer.php'); ?>
 

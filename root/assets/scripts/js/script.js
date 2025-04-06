@@ -53,3 +53,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+
+/* =====================================
+   New PFP Upload: Show Preview
+========================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+    const fileInput = document.getElementById('pfpInput');
+    const preview = document.getElementById('previewImage');
+
+    if (fileInput && preview) {
+        fileInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                preview.src = URL.createObjectURL(file);
+            }
+        });
+    }
+});
