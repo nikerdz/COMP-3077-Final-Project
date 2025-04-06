@@ -119,11 +119,17 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php foreach ($recipes as $recipe): ?>
                         <div class="recipe-card">
                             <img src="<?php echo htmlspecialchars($recipe['image_url']); ?>" alt="Recipe Image">
-                            <h3><?php echo htmlspecialchars($recipe['title']); ?></h3>
+                            <h3>
+                                <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-link">
+                                    <?php echo htmlspecialchars($recipe['title']); ?>
+                                </a>
+                            </h3>
                             <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
-                            <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="btn">View Recipe</a>
                         </div>
                     <?php endforeach; ?>
+                    <div style="text-align: center; width: 100%;">
+                        <a href="<?php echo RECIPE_URL; ?>add-recipe.php" class="btn">Post a Recipe</a>
+                    </div>
                 </div>
             <?php endif; ?>
         </div>
@@ -150,9 +156,7 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             <?php endif; ?>
         </div>
-    </div>
-
-    
+    </div> 
 </main>
 
 

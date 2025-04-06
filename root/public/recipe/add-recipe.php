@@ -55,6 +55,35 @@ if (!isset($_SESSION['user_id'])) {
 
 <!-- Main Content Section -->
 <main>
+    <div class="add-recipe-section">
+        <form action="<?php echo PHP_URL; ?>add_recipe_submit.php" method="POST" enctype="multipart/form-data" class="recipe-form">
+            <h2>Add a New Recipe</h2>
+
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" required>
+
+            <label for="description">Description</label>
+            <textarea name="description" id="description" rows="5" required></textarea>
+
+            <label for="image">Image</label>
+            <input type="file" name="image" id="image" accept="image/*">
+
+            <label for="cuisine_type">Cuisine Type</label>
+            <input type="text" name="cuisine_type" id="cuisine_type">
+
+            <label for="difficulty">Difficulty</label>
+            <select name="difficulty" id="difficulty">
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
+
+            <label for="cooking_time">Cooking Time (minutes)</label>
+            <input type="number" name="cooking_time" id="cooking_time" required>
+
+            <button type="submit">Post Recipe</button>
+        </form>
+    </div>
 </main>
 
 
