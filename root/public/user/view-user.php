@@ -1,40 +1,45 @@
 <?php
-// Include the constants.php file
 require_once('../../config/constants.php');
 require_once('../../config/db_config.php');
-
-// Start the session to check if the user is logged in
 session_start();
-// Redirect if not logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: " . PUBLIC_URL . "login.php");
+
+if (!isset($_GET['username'])) {
+    echo "No user specified.";
     exit();
 }
 
-// Extract data from session
-$firstName = htmlspecialchars($_SESSION['first_name']);
-$lastName = htmlspecialchars($_SESSION['last_name']);
-$username = htmlspecialchars($_SESSION['username']);
-$profilePic = !empty($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'default.png';
-$aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
+$username = $_GET['username'];
 
-$userId = $_SESSION['user_id'];
-$query = "SELECT * FROM recipes WHERE created_by = :userId ORDER BY created_at DESC";
-$stmt = $pdo->prepare($query);
-$stmt->execute([':userId' => $userId]);
+$stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
+$stmt->execute([':username' => $username]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$userId = $user['id'];
+
+$firstName = htmlspecialchars($user['first_name']);
+$lastName = htmlspecialchars($user['last_name']);
+$username = htmlspecialchars($user['username']);
+$profilePic = !empty($user['profile_pic']) ? PROFILES_URL . $user['profile_pic'] : IMG_URL . 'profile.png';
+$aboutMe = htmlspecialchars($user['about_me'] ?? '');
+
+// Get recipes posted by this user
+$stmt = $pdo->prepare("SELECT * FROM recipes WHERE created_by = :id ORDER BY created_at DESC");
+$stmt->execute([':id' => $userId]);
 $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Get favorite recipes for this user
+// Get recipes this user has favourited
 $stmt = $pdo->prepare("
     SELECT r.*
     FROM recipes r
     JOIN favourites f ON r.id = f.recipe_id
-    WHERE f.user_id = :user_id
-    ORDER BY f.favourited_at DESC
+    WHERE f.user_id = :id
 ");
-$stmt->execute(['user_id' => $_SESSION['user_id']]);
+$stmt->execute([':id' => $userId]);
 $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+if (!$user) {
+    echo "User not found.";
+    exit();
+}
 ?>
 
 <!-- HTML Structure -->
@@ -66,7 +71,7 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Just+Another+Hand&display=swap" rel="stylesheet">
 
-    <title>RecipeHub | My Profile</title>
+    <title>RecipeHub | <?php echo $username; ?>'s Profile</title>
 
     <link rel="stylesheet" href="<?php echo CSS_URL; ?>?v=<?php echo time(); ?>"> <!-- Disable caching of style.css so I can properly load the changes I make -->
     <script src="<?php echo JS_URL; ?>script.js?v=<?php echo time(); ?>"></script>
@@ -94,10 +99,6 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php else: ?>
                     <p><strong>About Me:</strong> <em>No bio yet.</em></p>
                 <?php endif; ?>
-                <div class="profile-actions">
-                    <a href="<?php echo USER_URL; ?>edit-profile.php" class="btn">Edit Profile</a>
-                    <a href="<?php echo USER_URL; ?>user-settings.php" class="btn">User Settings</a>
-                </div>
             </div>
         </div>
     </div>
@@ -108,9 +109,8 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             <?php if (empty($recipes)): ?>
                 <div style="text-align: center; width: 100%;">
-                    <p>You haven’t posted any recipes yet.</p>
+                    <p><?php echo $username; ?> hasn’t posted any recipes yet.</p>
                     <br> <br>
-                    <a href="<?php echo RECIPE_URL; ?>add-recipe.php" class="btn">Post a Recipe</a>
                 </div>
             <?php else: ?>
                 <div class="recipe-grid">
@@ -125,9 +125,6 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
                         </div>
                     <?php endforeach; ?>
-                    <div style="text-align: center; width: 100%;">
-                        <a href="<?php echo RECIPE_URL; ?>add-recipe.php" class="btn">Post a Recipe</a>
-                    </div>
                 </div>
             <?php endif; ?>
         </div>
@@ -138,7 +135,7 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <h2>Favorite Recipes</h2>
             <?php if (empty($favRecipes)): ?>
                 <div style="text-align: center; width: 100%;">
-                    <p>You haven’t favorited any recipes yet.</p>
+                    <p><?php echo $username; ?> hasn’t favorited any recipes yet.</p>
                     <br>
                 </div>
             <?php else: ?>

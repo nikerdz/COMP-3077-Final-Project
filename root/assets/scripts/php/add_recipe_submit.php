@@ -10,10 +10,18 @@ if (!isset($_SESSION['user_id'])) {
 
 $userId = $_SESSION['user_id'];
 $title = trim($_POST['title']);
-$description = trim($_POST['description']);
 $cuisine = trim($_POST['cuisine_type']);
 $difficulty = $_POST['difficulty'];
 $time = (int) $_POST['cooking_time'];
+$servings = (int) $_POST['servings'];
+$readyInMinutes = (int) $_POST['ready_in_minutes'];
+$prepTime = (int) $_POST['preparation_time'];
+$vegetarian = isset($_POST['vegetarian']) ? 1 : 0;
+$glutenFree = isset($_POST['gluten_free']) ? 1 : 0;
+$dairyFree = isset($_POST['dairy_free']) ? 1 : 0;
+$mealType = $_POST['meal_type'];
+$ingredients = trim($_POST['ingredients']);
+$instructions = trim($_POST['instructions']);
 
 $imageUrl = null;
 $uploadDir = $_SERVER['DOCUMENT_ROOT'] . BASE_URL . 'assets/img/thumbnails/';
@@ -29,7 +37,6 @@ if (!empty($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR
         $fileName = uniqid('recipe_', true) . '.' . $ext;
         $destPath = $uploadDir . $fileName;
         if (move_uploaded_file($_FILES['image']['tmp_name'], $destPath)) {
-            // ✅ FIXED: Pointing to the correct folder
             $imageUrl = BASE_URL . 'assets/img/thumbnails/' . $fileName;
         }
     }
@@ -37,19 +44,36 @@ if (!empty($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR
 
 try {
     $stmt = $pdo->prepare("
-        INSERT INTO recipes (title, description, image_url, cuisine_type, difficulty, cooking_time, created_by)
-        VALUES (:title, :description, :image, :cuisine, :difficulty, :time, :created_by)
+    INSERT INTO recipes (
+        title, image_url, cuisine_type, difficulty, cooking_time, created_by,
+        servings, ready_in_minutes, preparation_time, vegetarian, gluten_free, dairy_free,
+        meal_type, ingredients, instructions
+    )
+    VALUES (
+        :title, :image, :cuisine, :difficulty, :cooking_time, :created_by,
+        :servings, :ready_in_minutes, :preparation_time, :vegetarian, :gluten_free, :dairy_free,
+        :meal_type, :ingredients, :instructions
+    )
     ");
 
     $stmt->execute([
         ':title' => $title,
-        ':description' => $description,
         ':image' => $imageUrl,
         ':cuisine' => $cuisine,
         ':difficulty' => $difficulty,
-        ':time' => $time,
-        ':created_by' => $userId
+        ':cooking_time' => $time,
+        ':created_by' => $userId,
+        ':servings' => $servings,
+        ':ready_in_minutes' => $readyInMinutes,
+        ':preparation_time' => $prepTime,
+        ':vegetarian' => $vegetarian,
+        ':gluten_free' => $glutenFree,
+        ':dairy_free' => $dairyFree,
+        ':meal_type' => $mealType,
+        ':ingredients' => $ingredients,
+        ':instructions' => $instructions
     ]);
+
 
     header('Location: ' . USER_URL . 'profile.php?recipe=success');
     exit();

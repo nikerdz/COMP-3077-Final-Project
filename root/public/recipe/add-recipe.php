@@ -57,13 +57,10 @@ if (!isset($_SESSION['user_id'])) {
 <main>
     <div class="add-recipe-section">
         <form action="<?php echo PHP_URL; ?>add_recipe_submit.php" method="POST" enctype="multipart/form-data" class="recipe-form">
-            <h2>Add a New Recipe</h2>
+            <h2>Post a Recipe</h2>
 
             <label for="title">Title</label>
             <input type="text" name="title" id="title" required>
-
-            <label for="description">Description</label>
-            <textarea name="description" id="description" rows="5" required></textarea>
 
             <label for="image">Image</label>
             <input type="file" name="image" id="image" accept="image/*">
@@ -71,15 +68,48 @@ if (!isset($_SESSION['user_id'])) {
             <label for="cuisine_type">Cuisine Type</label>
             <input type="text" name="cuisine_type" id="cuisine_type">
 
+            <label for="servings">Servings</label>
+            <input type="number" name="servings" id="servings" min="1" required>
+
+            <label for="ready_in_minutes">Ready In (minutes)</label>
+            <input type="number" name="ready_in_minutes" id="ready_in_minutes" min="1" required>
+
+            <label for="preparation_time">Preparation Time (minutes)</label>
+            <input type="number" name="preparation_time" id="preparation_time" min="0">
+
+            <label for="cooking_time">Cooking Time (minutes)</label>
+            <input type="number" name="cooking_time" id="cooking_time" required>
+
+            <label for="vegetarian">Vegetarian</label>
+            <input type="checkbox" name="vegetarian" id="vegetarian" value="1">
+
+            <label for="gluten_free">Gluten Free</label>
+            <input type="checkbox" name="gluten_free" id="gluten_free" value="1">
+
+            <label for="dairy_free">Dairy Free</label>
+            <input type="checkbox" name="dairy_free" id="dairy_free" value="1">
+
+            <label for="meal_type">Meal Type</label>
+            <select name="meal_type" id="meal_type">
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner" selected>Dinner</option>
+                <option value="Dessert">Dessert</option>
+                <option value="Snack">Snack</option>
+            </select>
+
+            <label for="ingredients">Ingredients (one per line)</label>
+            <textarea name="ingredients" id="ingredients" rows="5" required></textarea>
+
+            <label for="instructions">Instructions</label>
+            <textarea name="instructions" id="instructions" rows="6" required></textarea>
+
             <label for="difficulty">Difficulty</label>
             <select name="difficulty" id="difficulty">
                 <option value="Easy">Easy</option>
                 <option value="Medium">Medium</option>
                 <option value="Hard">Hard</option>
             </select>
-
-            <label for="cooking_time">Cooking Time (minutes)</label>
-            <input type="number" name="cooking_time" id="cooking_time" required>
 
             <button type="submit">Post Recipe</button>
         </form>

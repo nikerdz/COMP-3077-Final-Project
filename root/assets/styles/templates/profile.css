@@ -78,6 +78,7 @@
 }
 
 .recipe-posts {
+    align-self: center;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -148,6 +149,6 @@
 }
 
 .recipe-card h3 a.recipe-link:hover {
-    color: #ff7fa8; /* soft pink */
+    color: #ff7fa8;
 }
 
