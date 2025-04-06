@@ -107,7 +107,6 @@
     cursor: pointer;
 }
 
-/* Optional: enhance checkbox style */
 .checkbox-item input[type="checkbox"] {
     width: 18px;
     height: 18px;

@@ -8,6 +8,26 @@ $recipesPerPage = 24;
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $recipesPerPage;
 
+$category = $_GET['category'] ?? '';
+
+switch ($category) {
+    case 'Vegetarian Delights':
+        $_GET['vegetarian'] = 1;
+        break;
+    case 'Gluten-Free Goodness':
+        $_GET['gluten_free'] = 1;
+        break;
+    case 'User-Created Recipes':
+        $_GET['api'] = 'no';
+        break;
+    case 'Quick & Easy (Under 30 Min)':
+        $_GET['time'] = 'under30';
+        break;
+    case 'Featured Recipes':
+        $_GET['favourite_min'] = 6; // anything above 5
+        break;
+}
+
 // Filters
 $search = $_GET['search'] ?? '';
 $meal = $_GET['meal_type'] ?? '';
@@ -25,7 +45,13 @@ if (!empty($search)) {
     $params[':search_title'] = '%' . $search . '%';
     $params[':search_ingredients'] = '%' . $search . '%';
 }
-
+if (!empty($_GET['favourite_min'])) {
+    $conditions[] = "favourite_count >= :fav_min";
+    $params[':fav_min'] = (int)$_GET['favourite_min'];
+}
+if (!empty($_GET['api']) && $_GET['api'] === 'no') {
+    $conditions[] = "is_api = 0";
+}
 if (!empty($meal)) {
     $conditions[] = "meal_type = :meal";
     $params[':meal'] = $meal;
@@ -152,11 +178,13 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <option value="over60" <?php if ($time === 'over60') echo 'selected'; ?>>Over 60 min</option>
     </select>
 
-    <label><input type="checkbox" name="vegetarian" <?php if ($vegetarian) echo 'checked'; ?>> Vegetarian</label>
-    <label><input type="checkbox" name="gluten_free" <?php if ($gluten_free) echo 'checked'; ?>> Gluten-Free</label>
-    <label><input type="checkbox" name="dairy_free" <?php if ($dairy_free) echo 'checked'; ?>> Dairy-Free</label>
+    <div class="checkbox-group">
+        <label class="checkbox-item"><input type="checkbox" name="vegetarian" <?php if ($vegetarian) echo 'checked'; ?>> Vegetarian</label>
+        <label class="checkbox-item"><input type="checkbox" name="gluten_free" <?php if ($gluten_free) echo 'checked'; ?>> Gluten-Free</label>
+        <label class="checkbox-item"><input type="checkbox" name="dairy_free" <?php if ($dairy_free) echo 'checked'; ?>> Dairy-Free</label>
+    </div>
 
-    <button type="submit" class="btn">Apply Filters</button>
+    <button type="submit" class="btn">Search</button>
 </form>
 
 <div class="recipe-grid">

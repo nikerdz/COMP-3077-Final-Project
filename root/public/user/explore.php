@@ -55,7 +55,7 @@ session_start();
 
     <?php
     $categories = [
-        "Featured Recipes" => "SELECT * FROM recipes WHERE favourite_count > 5 ORDER BY favourite_count DESC LIMIT 5",
+        "Featured Recipes" => "SELECT * FROM recipes WHERE favourite_count >= 5 ORDER BY favourite_count DESC LIMIT 5",
         "User-Created Recipes" => "SELECT * FROM recipes WHERE is_api = 0 ORDER BY created_at DESC LIMIT 5",
         "Vegetarian Delights" => "SELECT * FROM recipes WHERE vegetarian = 1 ORDER BY RAND() LIMIT 5",     
         "Gluten-Free Goodness" => "SELECT * FROM recipes WHERE gluten_free = 1 ORDER BY RAND() LIMIT 5",
@@ -70,7 +70,7 @@ session_start();
         <section class="explore-category">
             <div class="explore-header">
                 <h2><?php echo htmlspecialchars($title); ?></h2>
-                <a href="<?php echo PUBLIC_URL . 'all-recipes.php?category=' . urlencode($title); ?>" class="see-more-btn">See More</a>
+                <a href="<?php echo RECIPE_URL . 'all-recipes.php?category=' . urlencode($title); ?>" class="see-more-btn">See More</a>
             </div>
             <div class="explore-row">
                 <?php foreach ($recipes as $recipe): ?>
