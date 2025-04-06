@@ -172,7 +172,7 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         $imagePath = '';
                         
                         if (strpos($imageUrlRaw, 'http') === 0 || strpos($imageUrlRaw, '/') === 0) {
-                            $imagePath = $imageUrlRaw; // Use as-is (full URL or local path)
+                            $imagePath = $imageUrlRaw;
                         } else {
                             $imagePath = IMG_URL . 'thumbnails/' . ($imageUrlRaw ?: 'default.png'); // fallback to default
                         }
