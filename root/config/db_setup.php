@@ -36,6 +36,30 @@ try {
     $pdo->exec($createUsersTable);
     echo "Users table created successfully or already exists.<br>";
 
+    // Insert Spoonacular user if not already exists
+    $checkStmt = $pdo->prepare("SELECT id FROM users WHERE username = 'spoonacular'");
+    $checkStmt->execute();
+
+    if ($checkStmt->rowCount() === 0) {
+        $insertStmt = $pdo->prepare("
+            INSERT INTO users (
+                username, email, first_name, last_name, password, profile_pic, about_me
+            ) VALUES (
+                'spoonacular',
+                'main@spoonacular.com',
+                'Spoonacular',
+                'API',
+                '',
+                'spoonacular.svg',
+                'Spoonacular API is a food management system that combines dining out, eating store-bought food, and cooking at home to help you find and organize the restaurants, products, and recipes that fit your diet and help you reach your nutrition goals.'
+            )
+        ");
+        $insertStmt->execute();
+        echo "Spoonacular user created.<br>";
+    } else {
+        echo "Spoonacular user already exists.<br>";
+    }
+
     $createRecipesTable = "
     CREATE TABLE IF NOT EXISTS recipes (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -53,6 +77,7 @@ try {
         cooking_time INT,
         ingredients TEXT,
         instructions TEXT,
+        is_api BOOLEAN DEFAULT FALSE,
         created_by INT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         favourite_count INT DEFAULT 0,

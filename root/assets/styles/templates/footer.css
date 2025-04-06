@@ -9,3 +9,13 @@ footer {
     font-size: 14px;
     margin-top: 20px;
 }
+
+footer a{
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+footer a:hover{
+    color: #f4a261;
+}

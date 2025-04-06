@@ -1,0 +1,80 @@
+.explore-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.explore-container h1 {
+    font-weight: normal;
+    font-family: "Just Another Hand", cursive;
+    letter-spacing: 0.1px;
+    color: #555;
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.explore-category {
+    margin-bottom: 60px;
+}
+
+.explore-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.explore-header h2 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.see-more-btn {
+    text-decoration: none;
+    background-color: #6c5b7b;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+.see-more-btn:hover {
+    background-color: #f4a261;
+}
+
+.explore-row {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.recipe-card {
+    min-width: 220px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.recipe-card img {
+    width: 100%;
+    border-radius: 6px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.recipe-title-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    display: block;
+    margin: 10px 0;
+}
+
+.recipe-title-link:hover {
+    color: #f4a261;
+}

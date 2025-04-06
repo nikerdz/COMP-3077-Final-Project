@@ -184,7 +184,7 @@ $_SESSION['recently_viewed'] = array_slice($_SESSION['recently_viewed'], 0, 3);
         <!-- Show comments -->
         <?php if (!empty($comments)): ?>
             <?php foreach ($comments as $comment): ?>
-                <div class="comment-card">
+                <div class="comment-card-view">
                     <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($comment['username']); ?>" class="author-link">
                         <p><?php echo htmlspecialchars($comment['username']); ?></a> says:</p>
                     

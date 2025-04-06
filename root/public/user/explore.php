@@ -1,9 +1,19 @@
 <?php
 // Include the constants.php file
 require_once('../../config/constants.php');
+require_once('../../config/db_config.php');
 
 // Start the session to check if the user is logged in
 session_start();
+
+// Fetch categories and their respective recipes
+$categories = [
+    'Vegetarian Delights' => "SELECT * FROM recipes WHERE vegetarian = 1 LIMIT 5",
+    'Quick & Easy' => "SELECT * FROM recipes WHERE ready_in_minutes <= 30 LIMIT 5",
+    'Gluten-Free Goodness' => "SELECT * FROM recipes WHERE gluten_free = 1 LIMIT 5",
+    // Add more categories as needed
+];
+
 ?>
 
 <!-- HTML Structure -->
@@ -48,22 +58,48 @@ session_start();
 
 
 <!-- Main Content Section -->
-<main>
-    <div>
-        <h1>Explore Recipes From Around the World!</h1>
-    </div>
+<main class="explore-container">
+    <h1 style="text-align:center; margin-top: 40px;">Explore New & Trending Recipes</h1>
 
-    <div>
-        <h2>This Week's Featured Recipes</h2>
-    </div>
+    <?php
+    $categories = [
+        "Featured Recipes" => "SELECT * FROM recipes ORDER BY RAND() LIMIT 5",
+        "User-Created Recipes" => "SELECT * FROM recipes WHERE is_api = 0 ORDER BY created_at DESC LIMIT 5",
+        "Vegetarian Delights" => "SELECT * FROM recipes WHERE vegetarian = 1 ORDER BY RAND() LIMIT 5",     
+        "Gluten-Free Goodness" => "SELECT * FROM recipes WHERE gluten_free = 1 ORDER BY RAND() LIMIT 5",
+        "Quick & Easy (Under 30 Min)" => "SELECT * FROM recipes WHERE ready_in_minutes <= 30 ORDER BY RAND() LIMIT 5",   
+    ];
 
-    <div>
-        <h2>See Recipes by Other Users</h2>
-    </div>
+    foreach ($categories as $title => $sql):
+        $stmt = $pdo->query($sql);
+        $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (count($recipes) > 0):
+    ?>
+        <section class="explore-category">
+            <div class="explore-header">
+                <h2><?php echo htmlspecialchars($title); ?></h2>
+                <a href="<?php echo PUBLIC_URL . 'all-recipes.php?category=' . urlencode($title); ?>" class="see-more-btn">See More</a>
+            </div>
+            <div class="explore-row">
+                <?php foreach ($recipes as $recipe): ?>
+                    <div class="recipe-card">
+                        <img src="<?php echo htmlspecialchars($recipe['image_url'] ?? IMG_URL . 'thumbnails/default.png'); ?>" alt="Recipe Image">
+                        <h4>
+                            <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-title-link">
+                                <?php echo htmlspecialchars($recipe['title']); ?>
+                            </a>
+                        </h4>
+                        <p><strong>Time:</strong> <?php echo $recipe['ready_in_minutes']; ?> mins</p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
+    <?php endif; endforeach; ?>
 
-    <div>
-        <h2>See All Recipes</h2>
+    <div class="dashboard-links">
+        <a href="<?php echo RECIPE_URL . 'all-recipes.php'?>" class="btn">See All Recipes</a>
     </div>
+        
 </main>
 
 
