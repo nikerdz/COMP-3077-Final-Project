@@ -123,7 +123,7 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php echo htmlspecialchars($recipe['title']); ?>
                             </a>
                         </h4>
-                        <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                        <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -148,7 +148,10 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php if (!empty($recentComments)): ?>
             <?php foreach ($recentComments as $comment): ?>
                 <div class="comment-card">
-                    <p><strong><?php echo htmlspecialchars($comment['commenter']); ?></strong> on 
+                    <p>
+                    <strong><a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($comment['commenter']); ?>" class="comment-user-link">
+                            <?php echo htmlspecialchars($comment['commenter']); ?>
+                        </a></strong> on 
                         <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $comment['recipe_id']; ?>" class="comment-card-link">
                             <?php echo htmlspecialchars($comment['recipe_title']); ?>
                         </a>:
@@ -158,7 +161,7 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <p>No comments yet. Keep sharing your recipes!</p>
+            <p class="random-p">No comments yet. Keep sharing your recipes!</p>
         <?php endif; ?>
     </section>
 
@@ -174,13 +177,16 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php echo htmlspecialchars($recipe['title']); ?>
                             </a>
                         </h4>
-                        <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                        <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
                     </div>
                 <?php endforeach; ?>
             </div>
         <?php else: ?>
-            <p style="text-align: center;">No suggestions available right now.</p>
+            <p class="random-p">No suggestions available right now.</p>
         <?php endif; ?>
+            <div class="dashboard-links">
+                <a href="<?php echo USER_URL; ?>explore.php" class="btn">Explore Recipes</a>
+            </div>
     </section>
 </main>
 

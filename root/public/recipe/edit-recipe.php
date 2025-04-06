@@ -104,20 +104,22 @@ if (!$recipe) {
         <label for="cooking_time">Cooking Time</label>
         <input type="number" name="cooking_time" value="<?php echo $recipe['cooking_time']; ?>">
 
-        <label>
-            <input type="checkbox" name="vegetarian" <?php if ($recipe['vegetarian']) echo 'checked'; ?>>
-            Vegetarian
-        </label>
+        <div class="checkbox-group">
+            <label class="checkbox-item">
+                <input type="checkbox" name="vegetarian" <?php if ($recipe['vegetarian']) echo 'checked'; ?>>
+                <span>Vegetarian</span>
+            </label>
 
-        <label>
-            <input type="checkbox" name="gluten_free" <?php if ($recipe['gluten_free']) echo 'checked'; ?>>
-            Gluten Free
-        </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="gluten_free" <?php if ($recipe['gluten_free']) echo 'checked'; ?>>
+                <span>Gluten Free</span>
+            </label>
 
-        <label>
-            <input type="checkbox" name="dairy_free" <?php if ($recipe['dairy_free']) echo 'checked'; ?>>
-            Dairy Free
-        </label>
+            <label class="checkbox-item">
+                <input type="checkbox" name="dairy_free" <?php if ($recipe['dairy_free']) echo 'checked'; ?>>
+                <span>Dairy Free</span>
+            </label>
+        </div>
 
         <label for="meal_type">Meal Type</label>
         <select name="meal_type">

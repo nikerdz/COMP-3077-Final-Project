@@ -86,3 +86,30 @@
     background: #f4a261;
     transform: scale(1.05);
 }
+
+/* Group of checkboxes */
+.checkbox-group {
+    display: flex;
+    gap: 30px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Individual checkbox item */
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #444;
+    cursor: pointer;
+}
+
+/* Optional: enhance checkbox style */
+.checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #6c5b7b;
+}
