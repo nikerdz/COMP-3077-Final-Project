@@ -147,6 +147,7 @@
     color: #e76f51;
     text-decoration: none;
     font-weight: bold;
+    transition: 0.3s;
 }
 .author-link:hover {
     color:#ff7fa8;

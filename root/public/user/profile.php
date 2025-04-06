@@ -186,9 +186,9 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <?php echo htmlspecialchars($recipe['title']); ?>
                                 </a>
                             </h4>
-                            <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">
-                                By <?php echo htmlspecialchars($recipe['username']); ?>
-                            </a>
+                            <p> <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">By <?php echo htmlspecialchars($recipe['username']); ?>
+                                </a>
+                            </p>
                             <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
                             <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
                             <p class="favourite-count">❤️ <?php echo $favCount; ?></p>

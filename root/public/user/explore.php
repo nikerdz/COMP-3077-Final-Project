@@ -6,14 +6,6 @@ require_once('../../config/db_config.php');
 // Start the session to check if the user is logged in
 session_start();
 
-// Fetch categories and their respective recipes
-$categories = [
-    'Vegetarian Delights' => "SELECT * FROM recipes WHERE vegetarian = 1 LIMIT 5",
-    'Quick & Easy' => "SELECT * FROM recipes WHERE ready_in_minutes <= 30 LIMIT 5",
-    'Gluten-Free Goodness' => "SELECT * FROM recipes WHERE gluten_free = 1 LIMIT 5",
-    // Add more categories as needed
-];
-
 ?>
 
 <!-- HTML Structure -->

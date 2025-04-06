@@ -91,9 +91,9 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     <div class="recipe-card">
                         <img src="<?php echo htmlspecialchars($recipe['image_url']); ?>" alt="Recipe Image">
-                        <h3><a class="recipe-title-link" href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>">
+                        <h4><a class="recipe-title-link" href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>">
                             <?php echo htmlspecialchars($recipe['title']); ?>
-                        </a></h3>
+                        </a></h4>
                         <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['creator_username']); ?>" class="author-link">
                             By <?php echo htmlspecialchars($recipe['creator_username']); ?>
                         </a>

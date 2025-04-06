@@ -82,3 +82,63 @@
 .recipe-title-link:hover {
     color: #f4a261;
 }
+
+.all-container {
+    max-width: 1500px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.all-container h1 {
+    font-weight: normal;
+    font-family: "Just Another Hand", cursive;
+    letter-spacing: 0.1px;
+    color: #555;
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.filter-form {
+    text-align: center;
+    margin: 30px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.filter-form input,
+.filter-form select,
+.filter-form button {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.filter-form label {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pagination {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.pagination .page-link {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 3px;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    color: #333;
+    text-decoration: none;
+}
+
+.pagination .page-link.active {
+    background-color: #6c5b7b;
+    color: #fff;
+}
