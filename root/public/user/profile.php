@@ -35,7 +35,6 @@ $stmt = $pdo->prepare("
 ");
 $stmt->execute(['user_id' => $_SESSION['user_id']]);
 $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 
 <!-- HTML Structure -->
@@ -117,13 +116,22 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="recipe-grid">
                     <?php foreach (array_slice($recipes, 0, 4) as $recipe): ?>
                         <?php
+                        $imageUrlRaw = $recipe['image_url'] ?? '';
+                        $imagePath = '';
+                        
+                        if (strpos($imageUrlRaw, 'http') === 0 || strpos($imageUrlRaw, '/') === 0) {
+                            $imagePath = $imageUrlRaw; // Use as-is (full URL or local path)
+                        } else {
+                            $imagePath = IMG_URL . 'thumbnails/' . ($imageUrlRaw ?: 'default.png'); // fallback to default
+                        }
+
                         // Fetch favourite count for each recipe
                         $favCountStmt = $pdo->prepare("SELECT COUNT(*) FROM favourites WHERE recipe_id = :rid");
                         $favCountStmt->execute([':rid' => $recipe['id']]);
                         $favCount = $favCountStmt->fetchColumn();
                         ?>
                         <div class="recipe-card">
-                            <img src="<?php echo htmlspecialchars($recipe['image_url']); ?>" alt="Recipe Image">
+                            <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Recipe Image">
                             <h3>
                                 <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-link">
                                     <?php echo htmlspecialchars($recipe['title']); ?>
@@ -160,13 +168,22 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="recipe-grid">
                     <?php foreach (array_slice($favRecipes, 0, 4) as $recipe): ?>
                         <?php
+                        $imageUrlRaw = $recipe['image_url'] ?? '';
+                        $imagePath = '';
+                        
+                        if (strpos($imageUrlRaw, 'http') === 0 || strpos($imageUrlRaw, '/') === 0) {
+                            $imagePath = $imageUrlRaw; // Use as-is (full URL or local path)
+                        } else {
+                            $imagePath = IMG_URL . 'thumbnails/' . ($imageUrlRaw ?: 'default.png'); // fallback to default
+                        }
+
                         // Fetch favourite count for each recipe
                         $favCountStmt = $pdo->prepare("SELECT COUNT(*) FROM favourites WHERE recipe_id = :rid");
                         $favCountStmt->execute([':rid' => $recipe['id']]);
                         $favCount = $favCountStmt->fetchColumn();
                         ?>
                         <div class="recipe-card">
-                            <img src="<?php echo htmlspecialchars($recipe['image_url']); ?>" alt="Recipe Image">
+                            <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Recipe Image">
                             <h3>
                                 <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-link">
                                     <?php echo htmlspecialchars($recipe['title']); ?>

@@ -52,6 +52,16 @@ if (isset($_GET['comment']) && $_GET['comment'] === 'success') {
     echo "<script>alert('Your comment was posted successfully!'); </script>";
 }
 
+$imageUrlRaw = $recipe['image_url'] ?? '';
+    $imagePath = '';
+                        
+    if (strpos($imageUrlRaw, 'http') === 0 || strpos($imageUrlRaw, '/') === 0) {
+        $imagePath = $imageUrlRaw; // Use as-is (full URL or local path)
+    } else {
+        $imagePath = IMG_URL . 'thumbnails/' . ($imageUrlRaw ?: 'default.png'); // fallback to default
+    }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -94,7 +104,7 @@ if (isset($_GET['comment']) && $_GET['comment'] === 'success') {
 <main>
     <div class="recipe-view-container">
         <div class="recipe-header">
-            <img src="<?php echo htmlspecialchars($recipe['image_url']); ?>" alt="Recipe Image">
+            <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Recipe Image">
             <h1><?php echo htmlspecialchars($recipe['title']); ?></h1>
             <p style="text-align:center;">By 
             <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">

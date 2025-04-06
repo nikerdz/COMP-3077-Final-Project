@@ -23,7 +23,7 @@ $mealType = $_POST['meal_type'];
 $ingredients = trim($_POST['ingredients']);
 $instructions = trim($_POST['instructions']);
 
-$imageUrl = null;
+$imageUrl = 'default.png';
 $uploadDir = $_SERVER['DOCUMENT_ROOT'] . BASE_URL . 'assets/img/thumbnails/';
 
 if (!file_exists($uploadDir)) {
