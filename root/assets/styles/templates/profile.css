@@ -19,11 +19,6 @@
     transition: 0.3s;
 }
 
-.profile-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
 .profile-image {
     flex-shrink: 0;
     text-align: center;
@@ -91,11 +86,6 @@
     transition: 0.3s;
 }
 
-.recipe-posts:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
 .recipe-posts h2 {
     font-weight: normal;
     font-family: "Just Another Hand", cursive;
@@ -123,6 +113,11 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     transition: 0.3s;
     margin-bottom: 30px;
+}
+
+.recipe-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .recipe-card img {

@@ -47,6 +47,11 @@ if (isset($_SESSION['user_id'])) {
     ]);
     $isFavourited = $favCheck->fetch() ? true : false;
 }
+
+if (isset($_GET['comment']) && $_GET['comment'] === 'success') {
+    echo "<script>alert('Your comment was posted successfully!'); </script>";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -137,7 +142,7 @@ if (isset($_SESSION['user_id'])) {
 
     <!-- Comments Section -->
     <div class="recipe-comments">
-        <h2>Comments</h2>
+        <h2>Comments</h2><br>
 
         <?php
         // Fetch existing comments

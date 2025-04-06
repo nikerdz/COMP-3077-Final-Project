@@ -112,11 +112,17 @@ if (!$user) {
             <?php if (empty($recipes)): ?>
                 <div style="text-align: center; width: 100%;">
                     <p><?php echo $username; ?> hasn’t posted any recipes yet.</p>
-                    <br> <br>
+                    <br><br>
                 </div>
             <?php else: ?>
                 <div class="recipe-grid">
-                    <?php foreach ($recipes as $recipe): ?>
+                    <?php foreach (array_slice($recipes, 0, 4) as $recipe): ?>
+                        <?php
+                        // Fetch favourite count for each recipe
+                        $favCountStmt = $pdo->prepare("SELECT COUNT(*) FROM favourites WHERE recipe_id = :rid");
+                        $favCountStmt->execute([':rid' => $recipe['id']]);
+                        $favCount = $favCountStmt->fetchColumn();
+                        ?>
                         <div class="recipe-card">
                             <img src="<?php echo htmlspecialchars($recipe['image_url']); ?>" alt="Recipe Image">
                             <h3>
@@ -125,16 +131,27 @@ if (!$user) {
                                 </a>
                             </h3>
                             <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                            <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
+
+                <?php if (count($recipes) > 4): ?>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <a href="<?php echo USER_URL . 'user-recipes.php?username=' . urlencode($username); ?>" class="btn">
+                            View All <?php echo $username; ?>'s Recipes
+                        </a>
+                    </div>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
     </div>
 
+
     <div class="recipe-section">
         <div class="recipe-posts">
             <h2>Favourite Recipes</h2>
+
             <?php if (empty($favRecipes)): ?>
                 <div style="text-align: center; width: 100%;">
                     <p><?php echo $username; ?> hasn’t favourited any recipes yet.</p>
@@ -142,24 +159,40 @@ if (!$user) {
                 </div>
             <?php else: ?>
                 <div class="recipe-grid">
-                    <?php foreach ($favRecipes as $recipe): ?>
+                    <?php foreach (array_slice($favRecipes, 0, 4) as $recipe): ?>
+                        <?php
+                        // Fetch favourite count for each recipe
+                        $favCountStmt = $pdo->prepare("SELECT COUNT(*) FROM favourites WHERE recipe_id = :rid");
+                        $favCountStmt->execute([':rid' => $recipe['id']]);
+                        $favCount = $favCountStmt->fetchColumn();
+                        ?>
                         <div class="recipe-card">
                             <img src="<?php echo htmlspecialchars($recipe['image_url']); ?>" alt="Recipe Image">
-                                <h3>
-                                    <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-link">
-                                        <?php echo htmlspecialchars($recipe['title']); ?>
-                                    </a>
-                                </h3>
-                                <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['creator_username']); ?>" class="author-link">
-                                    By <?php echo htmlspecialchars($recipe['creator_username']); ?>
+                            <h3>
+                                <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-link">
+                                    <?php echo htmlspecialchars($recipe['title']); ?>
                                 </a>
+                            </h3>
+                            <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['creator_username']); ?>" class="author-link">
+                                By <?php echo htmlspecialchars($recipe['creator_username']); ?>
+                            </a>
                             <p><strong>Cuisine:</strong> <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                            <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
+
+                <?php if (count($favRecipes) > 4): ?>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <a href="<?php echo USER_URL . 'user-favourites.php?username=' . urlencode($username); ?>" class="btn">
+                            View All <?php echo $username; ?>'s Favourites
+                        </a>
+                    </div>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
-    </div> 
+    </div>
+
 </main>
 
 

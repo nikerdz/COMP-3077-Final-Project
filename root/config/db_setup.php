@@ -40,7 +40,7 @@ try {
     CREATE TABLE IF NOT EXISTS recipes (
         id INT AUTO_INCREMENT PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
-        image_url VARCHAR(255),
+        image_url VARCHAR(255) DEFAULT 'default.png',
         cuisine_type VARCHAR(100),
         difficulty ENUM('Easy', 'Medium', 'Hard'),
         vegetarian BOOLEAN DEFAULT FALSE,
