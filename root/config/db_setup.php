@@ -66,7 +66,7 @@ try {
 
     if ($checkAdminStmt->rowCount() === 0) {
         // Hash the admin password
-        $adminPassword = password_hash('Qazwsx098$', PASSWORD_DEFAULT);
+        $adminPassword = password_hash('placeholder', PASSWORD_DEFAULT);
 
         $insertAdminStmt = $pdo->prepare("
             INSERT INTO users (
