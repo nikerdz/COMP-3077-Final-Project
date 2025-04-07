@@ -60,6 +60,34 @@ try {
         echo "Spoonacular user already exists.<br>";
     }
 
+    // Insert default admin user if not already exists
+    $checkAdminStmt = $pdo->prepare("SELECT id FROM users WHERE username = 'admin'");
+    $checkAdminStmt->execute();
+
+    if ($checkAdminStmt->rowCount() === 0) {
+        // Hash the admin password
+        $adminPassword = password_hash('Qazwsx098$', PASSWORD_DEFAULT);
+
+        $insertAdminStmt = $pdo->prepare("
+            INSERT INTO users (
+                username, email, first_name, last_name, password, profile_pic, about_me, is_admin
+            ) VALUES (
+                'admin',
+                'admin@recipehub.com',
+                'Admin',
+                'User',
+                :password,
+                'admin.png',
+                'This is the main administrator account for managing RecipeHub.',
+                1
+            )
+        ");
+        $insertAdminStmt->execute([':password' => $adminPassword]);
+        echo "Default admin user created.<br>";
+    } else {
+        echo "Admin user already exists.<br>";
+    }
+
     $createRecipesTable = "
     CREATE TABLE IF NOT EXISTS recipes (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -81,6 +109,7 @@ try {
         created_by INT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         favourite_count INT DEFAULT 0,
+        is_admin BOOLEAN DEFAULT FALSE,
         FOREIGN KEY (created_by) REFERENCES users(id)
     ) ENGINE=InnoDB;
     ";

@@ -20,6 +20,7 @@ if (!$user) {
 }
 
 $userId = $user['id'];
+$otherUserProfilePic = !empty($user['profile_pic']) ? PROFILES_URL . $user['profile_pic'] : IMG_URL . 'profile.png';
 
 $stmt = $pdo->prepare("
     SELECT r.*, u.username AS creator_username
@@ -75,9 +76,16 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 <!-- Main Content Section -->
+
+<section class="hero-section less-hero">
+        <div class="dashboard-profile">
+                <img src="<?php echo $otherUserProfilePic ?>" alt="Profile Picture" width="500" height="600">
+            </div>
+            <p style="text-align:center"><?php echo htmlspecialchars($username); ?>'s Favourite Recipes</p>
+</section>
+<br>
 <main>
     <div class="recipe-section">
-        <h2 style="text-align:center"><?php echo htmlspecialchars($username); ?>'s Favourite Recipes</h2>
         <div class="recipe-grid">
             <?php if (empty($favRecipes)): ?>
                 <p><?php echo htmlspecialchars($username); ?> hasn’t favourited any recipes yet.</p>
@@ -94,9 +102,10 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <h4><a class="recipe-title-link" href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>">
                             <?php echo htmlspecialchars($recipe['title']); ?>
                         </a></h4>
-                        <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['creator_username']); ?>" class="author-link">
-                            By <?php echo htmlspecialchars($recipe['creator_username']); ?>
-                        </a>
+                        <p> <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['creator_username']); ?>" class="author-link"> By <?php echo htmlspecialchars($recipe['creator_username']); ?>
+                            </a>
+                        </p>
+                        <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
                         <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
                         <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
                     </div>
@@ -105,8 +114,6 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </main>
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!-- Footer -->
 <?php include_once('../../assets/includes/footer.php'); ?>
 

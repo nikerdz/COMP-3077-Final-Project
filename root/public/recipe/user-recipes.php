@@ -20,6 +20,7 @@ if (!$user) {
 }
 
 $userId = $user['id'];
+$otherUserProfilePic = !empty($user['profile_pic']) ? PROFILES_URL . $user['profile_pic'] : IMG_URL . 'profile.png';
 $recipesStmt = $pdo->prepare("SELECT * FROM recipes WHERE created_by = :id ORDER BY created_at DESC");
 $recipesStmt->execute([':id' => $userId]);
 $recipes = $recipesStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -65,15 +66,18 @@ $recipes = $recipesStmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- Navigation Bar and Side Bar Menu -->
 <?php include_once('../../assets/includes/navbar.php'); ?>
 
-
 <!-- Main Content Section -->
+
+<section class="hero-section less-hero">
+        <div class="dashboard-profile">
+                <img src="<?php echo $otherUserProfilePic ?>" alt="Profile Picture" width="500" height="600">
+            </div>
+            <p style="text-align:center">All Recipes by <?php echo htmlspecialchars($username); ?>
+            </p>
+</section>
+<br>
 <main>
     <div class="recipe-section">
-        <h2 style="text-align:center">All Recipes by 
-            
-            <?php echo htmlspecialchars($username); ?>
-
-        </h2>
         <div class="recipe-grid">
             <?php if (empty($recipes)): ?>
                 <p><?php echo htmlspecialchars($username); ?> hasn’t posted any recipes yet.</p>
@@ -90,6 +94,7 @@ $recipes = $recipesStmt->fetchAll(PDO::FETCH_ASSOC);
                         <h4><a class="recipe-link" href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>">
                             <?php echo htmlspecialchars($recipe['title']); ?>
                         </a></h4>
+                        <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
                         <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
                         <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
                     </div>
@@ -98,8 +103,6 @@ $recipes = $recipesStmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </main>
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!-- Footer -->
 <?php include_once('../../assets/includes/footer.php'); ?>
 

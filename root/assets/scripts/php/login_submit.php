@@ -30,10 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['email'] = $user['email'];
             $_SESSION['profile_pic'] = $user['profile_pic'] ?? 'default.png';
             $_SESSION['about_me'] = $user['about_me'];
+            $_SESSION['is_admin'] = $user['is_admin'];
 
-            // Redirect to the user dashboard
-            header('Location: ' . PUBLIC_URL . 'user/dashboard.php');
-            exit();
+            if (!empty($user['is_admin']) && $user['is_admin']) {
+                header("Location: " . ADMIN_URL . "dashboard.php");
+                exit();
+            } else {
+                header("Location: " . USER_URL . "dashboard.php");
+                exit();
+            }            
         } else {
             // Incorrect password
             $_SESSION['login_error'] = "Incorrect username or password.";
