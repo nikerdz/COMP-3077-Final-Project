@@ -94,7 +94,15 @@ $recipes = $recipesStmt->fetchAll(PDO::FETCH_ASSOC);
                         ?>
 
                     <div class="recipe-card">
-                        <img src="<?php echo htmlspecialchars($recipe['image_url']); ?>" alt="Recipe Image">
+                    <?php
+                        $imageSrc = $recipe['image_url'];
+                        if (empty($imageSrc) || $imageSrc === 'default.png') {
+                                $imageSrc = IMG_URL . 'thumbnails/default.png';
+                        } elseif (!str_starts_with($imageSrc, 'http') && !str_contains($imageSrc, '/')) {
+                            $imageSrc = IMG_URL . 'thumbnails/' . $imageSrc;
+                        }
+                    ?>
+                        <img src="<?php echo htmlspecialchars($imageSrc); ?>" alt="Recipe Image">
                         <h4><a class="recipe-link" href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>">
                             <?php echo htmlspecialchars($recipe['title']); ?>
                         </a></h4>

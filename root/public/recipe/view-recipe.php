@@ -119,7 +119,15 @@ $_SESSION['recently_viewed'] = array_slice($_SESSION['recently_viewed'], 0, 3);
 <main>
     <div class="recipe-view-container">
         <div class="recipe-header">
-            <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Recipe Image">
+        <?php
+             $imageSrc = $recipe['image_url'];
+             if (empty($imageSrc) || $imageSrc === 'default.png') {
+                    $imageSrc = IMG_URL . 'thumbnails/default.png';
+            } elseif (!str_starts_with($imageSrc, 'http') && !str_contains($imageSrc, '/')) {
+                $imageSrc = IMG_URL . 'thumbnails/' . $imageSrc;
+              }
+           ?>
+            <img src="<?php echo htmlspecialchars($imageSrc); ?>" alt="Recipe Image">
             <h1><?php echo htmlspecialchars($recipe['title']); ?></h1>
             <p style="text-align:center;">By 
             <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">
