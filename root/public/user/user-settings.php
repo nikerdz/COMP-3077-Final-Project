@@ -4,6 +4,10 @@ require_once('../../config/constants.php');
 
 // Start the session to check if the user is logged in
 session_start();
+
+$theme = $_SESSION['theme'] ?? 'theme1';
+$themeSuffix = $theme === 'theme2' ? '2' : ($theme === 'theme3' ? '3' : '');
+
 // Redirect if not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: " . PUBLIC_URL . "login.php");
@@ -52,6 +56,7 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
     <title>RecipeHub | User Settings</title>
 
     <link rel="stylesheet" href="<?php echo CSS_URL; ?>?v=<?php echo time(); ?>"> <!-- Disable caching of style.css so I can properly load the changes I make -->
+    <link rel="stylesheet" href="<?php echo THEME_URL . $theme . '.css'; ?>?v=<?php echo time(); ?>">
     <script src="<?php echo JS_URL; ?>script.js?v=<?php echo time(); ?>"></script>
 </head>
 <body>
@@ -80,22 +85,25 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
 
                 <div class="theme-choice">
                     <img src="<?php echo IMG_URL; ?>logo.png" alt="Pink Theme" />
-                    <form method="POST" action="#">
-                        <button class="btn">Pink Theme</button>
+                    <form method="POST" action="<?php echo PHP_URL; ?>theme_change_submit.php">
+                        <input type="hidden" name="theme" value="theme1">
+                        <button type="submit" class="btn">Pink Theme</button>
                     </form>
                 </div>
 
                 <div class="theme-choice">
                     <img src="<?php echo IMG_URL; ?>logo2.png" alt="Blue Theme" />
-                    <form method="POST" action="#">
-                        <button class="btn">Blue Theme</button>
+                    <form method="POST" action="<?php echo PHP_URL; ?>theme_change_submit.php">
+                        <input type="hidden" name="theme" value="theme2">
+                        <button type="submit" class="btn">Blue Theme</button>
                     </form>
                 </div>
 
                 <div class="theme-choice">
                     <img src="<?php echo IMG_URL; ?>logo3.png" alt="Green Theme" />
-                    <form method="POST" action="#">
-                        <button class="btn">Green Theme</button>
+                    <form method="POST" action="<?php echo PHP_URL; ?>theme_change_submit.php">
+                        <input type="hidden" name="theme" value="theme3">
+                        <button type="submit" class="btn">Green Theme</button>
                     </form>
                 </div>
 

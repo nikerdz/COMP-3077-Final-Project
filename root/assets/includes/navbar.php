@@ -10,12 +10,19 @@ if (session_status() === PHP_SESSION_NONE) {
         <div class="container">
 
             <div class="logo-container">
+            <?php
+                if (session_status() === PHP_SESSION_NONE) session_start();
+                $theme = $_SESSION['theme'] ?? 'theme1';
+                $themeSuffix = $theme === 'theme2' ? '2' : ($theme === 'theme3' ? '3' : '');
+                ?>
+                
                 <img 
-                    src="<?php echo IMG_URL; ?>logo.png" 
+                    src="<?php echo IMG_URL . 'logo' . $themeSuffix . '.png'; ?>" 
                     alt="RecipeHub Logo"
                     id="logo-img"
-                    data-menu-icon="<?php echo IMG_URL; ?>menu.png"
-                    data-logo="<?php echo IMG_URL; ?>logo.png">
+                    data-menu-icon="<?php echo IMG_URL . 'menu' . $themeSuffix . '.png'; ?>"
+                    data-logo="<?php echo IMG_URL . 'logo' . $themeSuffix . '.png'; ?>">
+
 
                 <a href="<?php echo PUBLIC_URL; ?>index.php" class="logo">RecipeHub</a>
             </div>

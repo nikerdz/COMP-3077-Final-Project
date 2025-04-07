@@ -26,6 +26,9 @@ define('CONFIG_URL', BASE_URL . 'config/');
 // Path to main style script
 define('CSS_URL', BASE_URL . 'assets/styles/style.css');
 
+// Path to theme style scripts
+define('THEME_URL', BASE_URL . 'assets/styles/themes/');
+
 // Path to JS scripts
 define('JS_URL', BASE_URL . 'assets/scripts/js/');
 

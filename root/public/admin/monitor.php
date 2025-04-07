@@ -3,6 +3,9 @@ require_once('../../config/constants.php');
 require_once('../../config/db_config.php');
 session_start();
 
+$theme = $_SESSION['theme'] ?? 'theme1';
+$themeSuffix = $theme === 'theme2' ? '2' : ($theme === 'theme3' ? '3' : '');
+
 function checkHttpStatus($url, $timeout = 3) {
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -85,6 +88,7 @@ for ($i = 4; $i >= 0; $i--) {
     <title>RecipeHub | Systems Monitor</title>
 
     <link rel="stylesheet" href="<?php echo CSS_URL; ?>?v=<?php echo time(); ?>"> <!-- Disable caching of style.css so I can properly load the changes I make -->
+    <link rel="stylesheet" href="<?php echo THEME_URL . $theme . '.css'; ?>?v=<?php echo time(); ?>">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script src="<?php echo JS_URL; ?>script.js?v=<?php echo time(); ?>"></script>
 </head>

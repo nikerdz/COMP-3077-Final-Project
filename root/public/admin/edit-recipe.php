@@ -3,6 +3,9 @@ require_once('../../config/constants.php');
 require_once('../../config/db_config.php');
 session_start();
 
+$theme = $_SESSION['theme'] ?? 'theme1';
+$themeSuffix = $theme === 'theme2' ? '2' : ($theme === 'theme3' ? '3' : '');
+
 if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
     header("Location: " . PUBLIC_URL . "login.php");
     exit();
@@ -63,6 +66,7 @@ $recipe = $stmt->fetch(PDO::FETCH_ASSOC);
     <title>RecipeHub | Edit Recipe</title>
 
     <link rel="stylesheet" href="<?php echo CSS_URL; ?>?v=<?php echo time(); ?>"> <!-- Disable caching of style.css so I can properly load the changes I make -->
+    <link rel="stylesheet" href="<?php echo THEME_URL . $theme . '.css'; ?>?v=<?php echo time(); ?>">
     <script src="<?php echo JS_URL; ?>script.js?v=<?php echo time(); ?>"></script>
 </head>
 <body>
