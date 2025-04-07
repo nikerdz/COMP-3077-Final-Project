@@ -10,7 +10,7 @@
 }
 
 .hero-section:hover {
-    background: linear-gradient(to right, #cdeeca, #149969);
+    background: linear-gradient(to right, #149969, #cdeeca);
 }
 
 .hero-section h1 {
