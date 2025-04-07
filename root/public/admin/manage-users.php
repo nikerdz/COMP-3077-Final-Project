@@ -14,16 +14,25 @@ $params = [];
 $where = '';
 
 if (!empty($search)) {
-    $where = "WHERE username LIKE :search OR first_name LIKE :search OR last_name LIKE :search OR email LIKE :search";
-    $params[':search'] = '%' . $search . '%';
+    $stmt = $pdo->prepare("
+        SELECT * FROM users
+        WHERE username LIKE :search1 
+           OR first_name LIKE :search2 
+           OR last_name LIKE :search3 
+           OR email LIKE :search4
+        ORDER BY username ASC
+    ");
+    $stmt->execute([
+        ':search1' => "%$search%",
+        ':search2' => "%$search%",
+        ':search3' => "%$search%",
+        ':search4' => "%$search%",
+    ]);
+} else {
+    $stmt = $pdo->prepare("SELECT * FROM users ORDER BY username ASC");
+    $stmt->execute();
 }
 
-$stmt = $pdo->prepare("
-    SELECT * FROM users
-    $where
-    ORDER BY username ASC
-");
-$stmt->execute($params);
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
