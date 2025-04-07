@@ -84,7 +84,16 @@ $themeSuffix = $theme === 'theme2' ? '2' : ($theme === 'theme3' ? '3' : '');
                         ?>
 
                     <div class="recipe-card">
-                        <img src="<?php echo htmlspecialchars($recipe['image_url'] ?? IMG_URL . 'thumbnails/default.png'); ?>" alt="Recipe Image">
+                        <?php
+                            $imageSrc = $recipe['image_url'];
+                            if (empty($imageSrc) || $imageSrc === 'default.png') {
+                                $imageSrc = IMG_URL . 'thumbnails/default.png';
+                            } elseif (!str_starts_with($imageSrc, 'http') && !str_contains($imageSrc, '/')) {
+                                $imageSrc = IMG_URL . 'thumbnails/' . $imageSrc;
+                            }
+                            ?>
+                            <img src="<?php echo htmlspecialchars($imageSrc); ?>" alt="Recipe Image">
+
                         <h4>
                             <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-title-link">
                                 <?php echo htmlspecialchars($recipe['title']); ?>
