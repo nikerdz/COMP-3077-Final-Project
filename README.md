@@ -1,6 +1,6 @@
 # COMP-3077-Final-Project
 
-<img src="root/assets/img/logo.png" alt="Logo" width="50"/>
+<img src="root/assets/img/logo.png" alt="Logo" width="150"/>
 
 # RecipeHub
 
