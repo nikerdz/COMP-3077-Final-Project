@@ -96,15 +96,41 @@ body {
 
 .features {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     padding: 60px 20px;
     background: #f0f0f0;
     flex-wrap: wrap;
 }
 
+.about-features {
+    padding: 60px 20px;
+    background: #f0f0f0;
+}
+
+
 .feature {
     flex: 1;
     margin: 15px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    text-align: center;
+}
+
+.about-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-feature {
+    width: 100%;
+    margin: 20px 0;
     padding: 30px;
     background: #fff;
     border-radius: 10px;
@@ -125,6 +151,18 @@ body {
 }
 
 .feature p {
+    font-family: "Just Another Hand", cursive;
+    font-size: 30px;
+    color: #555;
+}
+
+.about-feature h2 {
+    font-size: 1.8rem;
+    color: #6c5b7b;
+    margin-bottom: 15px;
+}
+
+.about-feature p {
     font-family: "Just Another Hand", cursive;
     font-size: 30px;
     color: #555;

@@ -112,9 +112,8 @@ $themeSuffix = $theme === 'theme2' ? '2' : ($theme === 'theme3' ? '3' : '');
         <p>If you'd rather watch a walkthrough, this short demo covers the basics of using RecipeHub from start to finish.</p>
         
         <div class="video-wrapper">
-            <!-- Replace the video link below with your own hosted demo.mp4 or a YouTube embed -->
-            <video controls width="700">
-                <source src="<?php echo IMG_URL; ?>demo.mp4" type="video/mp4">
+            <video controls width="1000">
+                <source src="<?php echo IMG_URL; ?>user-guide.mkv" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>

@@ -57,23 +57,37 @@ $themeSuffix = $theme === 'theme2' ? '2' : ($theme === 'theme3' ? '3' : '');
     <div class="hero-section less-hero">
         <h1>About RecipeHub</h1>
     </div>
-    <section class="features">
-        <div class="container">
-            <div class="feature">
-                <h2>Why I Created RecipeHub</h2>
-                <p>
-                    RecipeHub was born out of my passion for cooking and the need for a convenient way to store and share recipes. 
-                    I found myself constantly bookmarking recipes, writing them down on sticky notes, or losing them in endless folders. 
-                    I wanted a simple, organized way to save my family’s traditional recipes, explore new dishes, and connect with others who love cooking. 
-                    RecipeHub allows users to build their own digital recipe book, rate and review dishes, and discover hidden culinary gems from around the world. 
-                    Whether you're a beginner or an experienced cook, this platform is designed to make cooking and recipe management easier and more enjoyable.
-                </br></br>- Anika, Founder of RecipeHub
-                </p>
-                </br> </br>
-                <img src="<?php echo IMG_URL; ?>book.png" alt="Girl with recipe book" width="400" height="350">
+    <section class="about-features">
+    <div class="about-container">
+        <div class="about-feature">
+            <h2>Watch my Developer Diary</h2>
+            <div class="video-wrapper">
+                <video id="dev-diary-video" controls muted loop>
+                    <source src="<?php echo IMG_URL; ?>dev-diary.mkv" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <script>
+                    document.getElementById('dev-diary-video').play();
+                </script>
             </div>
         </div>
-    </section>
+
+        <div class="about-feature">
+            <h2>Why I Created RecipeHub</h2>
+            <p>
+                RecipeHub was born out of my passion for cooking and the need for a convenient way to store and share recipes. 
+                I found myself constantly bookmarking recipes, writing them down on sticky notes, or losing them in endless folders. 
+                I wanted a simple, organized way to save my family’s traditional recipes, explore new dishes, and connect with others who love cooking. 
+                RecipeHub allows users to build their own digital recipe book, rate and review dishes, and discover hidden culinary gems from around the world. 
+                Whether you're a beginner or an experienced cook, this platform is designed to make recipe management easier and more enjoyable.
+                </br></br>- Anika, Founder of RecipeHub
+            </p>
+            </br></br>
+            <img src="<?php echo IMG_URL; ?>book.png" alt="Girl with recipe book" width="200" height="200">
+        </div>
+    </div>
+</section>
+
 </main>
 
 

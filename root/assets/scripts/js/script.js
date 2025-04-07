@@ -71,3 +71,14 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+/* =====================================
+   Make dev Diary slower
+========================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+    const video = document.getElementById("dev-diary-video");
+    if (video) {
+        video.playbackRate = 0.75;
+    }
+});

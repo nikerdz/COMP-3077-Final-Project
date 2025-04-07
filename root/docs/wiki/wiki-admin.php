@@ -121,8 +121,8 @@ $themeSuffix = $theme === 'theme2' ? '2' : ($theme === 'theme3' ? '3' : '');
         <p>Prefer to watch a walkthrough? This demo video covers everything from logging in to managing users and checking the system monitor.</p>
 
         <div class="video-wrapper">
-            <video controls width="700">
-                <source src="<?php echo IMG_URL; ?>admin-demo.mp4" type="video/mp4">
+            <video controls width="1200">
+                <source src="<?php echo IMG_URL; ?>admin-guide.mkv" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
