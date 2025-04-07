@@ -73,7 +73,7 @@ session_start();
 
     <div class="map-section">
         <section class="settings-card">
-            <h2 style="text-align: center;">Contact Us</h2>
+            <h2 style="text-align: center;">Contact Information</h2>
             <p><strong>Phone:</strong> (123) 456-789</p>
             <p><strong>Email:</strong> <a href="mailto:help@recipehub.ca">help@recipehub.ca</a></p>
             <p><strong>Address:</strong> 401 Sunset Ave, Windsor, ON N9B 3P4</p>

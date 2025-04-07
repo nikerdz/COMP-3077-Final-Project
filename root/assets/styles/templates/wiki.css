@@ -1,0 +1,177 @@
+.articles {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 60px 20px;
+    background: #f0f0f0;
+}
+
+.article {
+    width: 300px;
+    padding: 30px 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.article:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.article h2 {
+    font-size: 1.6rem;
+    color: #6c5b7b;
+    margin-bottom: 15px;
+}
+
+.article h2 a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+.article h2 a:hover {
+    color: #ff7fa8;
+}
+
+.article p {
+    font-family: "Just Another Hand", cursive;
+    font-size: 28px;
+    color: grey;
+    margin-bottom: 20px;
+}
+
+.article img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.faq-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.faq-container h1 {
+    text-align: center;
+    color: #6c5b7b;
+    margin-bottom: 40px;
+}
+
+.faq-item {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+}
+
+.faq-item h3 {
+    cursor: pointer;
+    font-size: 20px;
+    color: grey;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.faq-item h3:hover {
+    color: #ff7fa8;
+}
+
+.faq-item p {
+    display: none;
+    margin-top: 10px;
+    color: #333;
+    font-size: 16px;
+}
+
+.faq-item.active p {
+    display: block;
+}
+
+.faq-item.active h3 {
+    color: #ff7fa8;
+}
+
+.toggle-icon {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.wiki-guide {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.wiki-guide ul{
+    padding-left: 20px;
+}
+
+.wiki-guide ol{
+    padding-left: 20px;
+}
+
+
+.wiki-nav {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+
+.wiki-nav ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.wiki-nav li {
+    margin: 10px 0;
+}
+
+.wiki-nav a {
+    text-decoration: none;
+    color: #6c5b7b;
+    font-weight: bold;
+}
+
+.wiki-nav a:hover {
+    color: #e63946;
+}
+
+.wiki-section {
+    margin-bottom: 60px;
+}
+
+.wiki-section h2 {
+    color: #6c5b7b;
+    margin-bottom: 10px;
+}
+
+.wiki-section img {
+    margin-top: 20px;
+    width: 900px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.video-wrapper {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.video-wrapper video {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}

@@ -22,10 +22,10 @@ session_start();
     <meta property="og:title" content="RecipeHub - Discover & Share Recipes">
     <meta property="og:description" content="Join RecipeHub and explore a world of delicious recipes. Share your favourites and organize your own recipe collection!">
     <meta property="og:image" content="<?php echo IMG_URL; ?>logo.png">
-    <meta property="og:url" content="https://yourwebsite.com/index.php">
+    <meta property="og:url" content="https://khan661.myweb.cs.uwindsor.ca/COMP-3077-Final-Project/root/public/index.php">
     <meta property="og:type" content="website"> <!-- Enhance link previews when shared on Facebook, LinkedIn, and other platforms -->
 
-    <link rel="canonical" href="https://yourwebsite.com/index.php"> <!-- Prevent duplicate content issues in search rankings -->
+    <link rel="canonical" href="https://khan661.myweb.cs.uwindsor.ca/COMP-3077-Final-Project/root/public/index.php"> <!-- Prevent duplicate content issues in search rankings -->
 
     <link rel="icon" type="image/x-icon" href="<?php echo IMG_URL; ?>favicon.ico"> <!-- Favicon of different sizes for better browser support -->
     <link rel="icon" type="image/png" sizes="32x32" href="<?php echo IMG_URL; ?>favicon-32x32.png">
@@ -49,36 +49,49 @@ session_start();
 
 <!-- Main Content Section -->
 <main>
-    <div class="hero-section">
+    <div class="hero-section less-hero">
         <h1>RecipeHub Wiki</h1>
         <p>Need help using RecipeHub? Browse the articles below for a solution.</p>
     </div>
-    <section class="features">
-        <div class="container">
-            <div class="feature">
-                <h2>User Guide</h2>
-                <p></p>
-                </br>
-                <img src="<?php echo IMG_URL; ?>guide.png" alt="Girl with recipe book" width="200" height="200">
+
+    <section class="articles">
+            <div class="article">
+                <h2>
+                    <a href="<?php echo WIKI_URL; ?>wiki-faq.php">FAQ</a>
+                </h2>
+                <p>Find answers to the most frequently asked questions about RecipeHub features, accounts, and troubleshooting.</p>
+                <br>
+                <img src="<?php echo IMG_URL; ?>faq.png" alt="FAQ Icon" width="200" height="200">
             </div>
 
-            <div class="feature">
-                <h2>Frequently Asked Questions</h2>
-                <p></p>
-                </br>
-                <img src="<?php echo IMG_URL; ?>faq.png" alt="Hands with yes or no signs" width="200" height="300">
+            <div class="article">
+                <h2>
+                    <a href="<?php echo WIKI_URL; ?>wiki-guide.php">User Guide</a>
+                </h2>
+                <p>A step-by-step guide for users: how to register, post recipes, comment, favorite, and customize your profile.</p>
+                <br>
+                <img src="<?php echo IMG_URL; ?>guide.png" alt="User Guide Icon" width="200" height="200">
             </div>
 
-            <div class="feature">
-                <h2>Something</h2>
-                <p></p>
-                </br>
-                <img src="<?php echo IMG_URL; ?>share_graphic.png" alt="2 girls cooking" width="250" height="200">
+            <div class="article">
+                <h2>
+                    <a href="<?php echo WIKI_URL; ?>wiki-admin.php">Admin Guide</a>
+                </h2>
+                <p>Details on administrative tasks such as managing users, moderating content, and using the system monitor.</p>
+                <br>
+                <img src="<?php echo IMG_URL; ?>admin.png" alt="Admin Guide Icon" width="250" height="200">
+            </div>
+
+            <div class="article">
+                <h2>
+                    <a href="<?php echo WIKI_URL; ?>wiki-documentation.php">Docs & Installation</a>
+                </h2>
+                <p>Set up RecipeHub on a different server, explore the file structure, and learn about the database schema.</p>
+                <br>
+                <img src="<?php echo IMG_URL; ?>install.png" alt="Installation Guide Icon" width="250" height="200">
             </div>
     </section>
-    </div>
 </main>
-
 
 <!-- Footer -->
 <?php include_once('../../assets/includes/footer.php'); ?>

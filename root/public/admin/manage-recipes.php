@@ -191,7 +191,7 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </a>
             </h4>
             <p>
-                <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">
+                <a href="<?php echo ADMIN_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">
                     By <?php echo htmlspecialchars($recipe['username']); ?>
                 </a>
             </p>
