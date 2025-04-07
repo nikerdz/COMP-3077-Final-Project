@@ -1,12 +1,12 @@
 # COMP-3077-Final-Project
 
-![Dashboard Screenshot](root/assets/img/dashboardmd.png)
+![Logo](root/assets/img/logo.png)
 
-# 🍲 RecipeHub
+# RecipeHub
 
 RecipeHub is a dynamic web platform that allows users to discover, upload, manage, and share recipes with others. Whether you're a casual cook or a culinary enthusiast, RecipeHub lets you create your own digital cookbook while exploring dishes from around the world.
 
-## 🌟 Features
+## Features
 
 - 👤 User registration, login, and profile customization
 - 📋 Add, edit, and delete your own recipes
@@ -14,7 +14,7 @@ RecipeHub is a dynamic web platform that allows users to discover, upload, manag
 - ❤️ Favorite recipes and view them on your profile
 - 💬 Comment on others’ recipes
 - 📊 Admin dashboard with monitoring tools
-- 🎨 Multiple site themes (Pink, Blue/Green, Mint)
+- 🎨 Multiple site themes (Pink, Blue, Green)
 - 📚 Wiki with documentation, user guides, and FAQs
 
 ## 🛠 Technologies Used
@@ -24,3 +24,11 @@ RecipeHub is a dynamic web platform that allows users to discover, upload, manag
 - MySQL + PDO
 - Chart.js (for graphs)
 - Spoonacular API
+
+## Gallery
+
+![Dashboard Screenshot](root/assets/img/dashboardmd.png)
+
+![Explore Screenshot](root/assets/img/exploremd.png)
+
+![Profile Screenshot](root/assets/img/profilemd.png)
