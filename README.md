@@ -17,7 +17,7 @@ RecipeHub is a dynamic web platform that allows users to discover, upload, manag
 - 🎨 Multiple site themes (Pink, Blue, Green)
 - 📚 Wiki with documentation, user guides, and FAQs
 
-## 🛠 Technologies Used
+## Technologies Used
 
 - HTML5 / CSS3 / JavaScript
 - PHP (vanilla, procedural)
