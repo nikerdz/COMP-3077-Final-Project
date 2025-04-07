@@ -4,6 +4,12 @@ require_once('../../config/constants.php');
 require_once('../../config/db_config.php');
 session_start();
 
+// Redirect if not logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: " . PUBLIC_URL . "login.php");
+    exit();
+}
+
 $recentlyViewedRecipes = [];
 
 if (!empty($_SESSION['recently_viewed'])) {

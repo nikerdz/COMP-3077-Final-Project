@@ -8,28 +8,41 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+$recipeId = $_GET['id'] ?? null;
+$userId = $_SESSION['user_id'];
+$isAdmin = $_SESSION['is_admin'] ?? false;
+
+if (!$recipeId || !is_numeric($recipeId)) {
     echo "Invalid recipe ID.";
     exit();
 }
 
-$recipeId = $_GET['id'];
-$userId = $_SESSION['user_id'];
-
-// Confirm ownership
-$stmt = $pdo->prepare("SELECT * FROM recipes WHERE id = :id AND created_by = :uid");
-$stmt->execute([':id' => $recipeId, ':uid' => $userId]);
+// Fetch the recipe
+$stmt = $pdo->prepare("SELECT * FROM recipes WHERE id = :id");
+$stmt->execute([':id' => $recipeId]);
 $recipe = $stmt->fetch();
 
 if (!$recipe) {
-    echo "Recipe not found or you don't have permission to delete it.";
+    echo "Recipe not found.";
+    exit();
+}
+
+// Check permission: must be owner OR admin
+if ($recipe['created_by'] != $userId && !$isAdmin) {
+    echo "You don't have permission to delete this recipe.";
     exit();
 }
 
 // Delete recipe
-$deleteStmt = $pdo->prepare("DELETE FROM recipes WHERE id = :id AND created_by = :uid");
-$deleteStmt->execute([':id' => $recipeId, ':uid' => $userId]);
+$deleteStmt = $pdo->prepare("DELETE FROM recipes WHERE id = :id");
+$deleteStmt->execute([':id' => $recipeId]);
 
-header("Location: " . USER_URL . "profile.php?deleted=1");
+// Redirect depending on role
+if ($isAdmin) {
+    header("Location: " . ADMIN_URL . "manage-recipes.php?deleted=1");
+} else {
+    header("Location: " . USER_URL . "profile.php?deleted=1");
+}
 exit();
+
 ?>

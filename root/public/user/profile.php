@@ -19,6 +19,13 @@ $profilePic = !empty($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'def
 $aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
 
 $userId = $_SESSION['user_id'];
+
+// Fetch full user data
+$stmt = $pdo->prepare("SELECT created_at FROM users WHERE id = :id");
+$stmt->execute([':id' => $userId]);
+$userMeta = $stmt->fetch(PDO::FETCH_ASSOC);
+$joinDate = date('F j, Y', strtotime($userMeta['created_at']));
+
 $query = "SELECT * FROM recipes WHERE created_by = :userId ORDER BY created_at DESC";
 $stmt = $pdo->prepare($query);
 $stmt->execute([':userId' => $userId]);
@@ -89,6 +96,7 @@ $favRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="profile-info">
                 <h2><?php echo $username; ?>'s Profile</h2>
                 <p><strong>Name:</strong> <?php echo $firstName; ?> <?php echo $lastName; ?></p>
+                <p><strong>Joined:</strong> <?php echo $joinDate; ?></p>
                 <?php if (!empty($_SESSION['about_me'])): ?>
                     <p><strong>About Me:</strong> <?php echo nl2br(htmlspecialchars($_SESSION['about_me'])); ?></p>
                 <?php else: ?>

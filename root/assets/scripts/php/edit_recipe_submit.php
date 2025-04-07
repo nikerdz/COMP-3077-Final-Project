@@ -62,8 +62,7 @@ try {
             meal_type = :meal_type,
             ingredients = :ingredients,
             instructions = :instructions
-            WHERE id = :id AND created_by = :user";
-        $params[':image'] = $imageUrl;
+            WHERE id = :id";
     } else {
         $query = "UPDATE recipes SET 
             title = :title,
@@ -79,11 +78,10 @@ try {
             meal_type = :meal_type,
             ingredients = :ingredients,
             instructions = :instructions
-            WHERE id = :id AND created_by = :user";
+            WHERE id = :id";
     }
-
-    $stmt = $pdo->prepare($query);
-    $stmt->execute([
+    
+    $params = [
         ':title' => $title,
         ':cuisine' => $cuisine,
         ':difficulty' => $difficulty,
@@ -97,13 +95,35 @@ try {
         ':meal_type' => $mealType,
         ':ingredients' => $ingredients,
         ':instructions' => $instructions,
-        ':id' => $recipeId,
-        ':user' => $userId,
-        ...(isset($imageUrl) ? [':image' => $imageUrl] : [])
-    ]);
+        ':id' => $recipeId
+    ];
+    
+    if ($imageUrl) {
+        $params[':image'] = $imageUrl;
+    }
+    
+    // Extra permission check for non-admin users
+    if (!$_SESSION['is_admin']) {
+        $query .= " AND created_by = :user";
+        $params[':user'] = $userId;
+    }
+    
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($params);
+    
+    // Redirect based on role and origin
+    if ($_SESSION['is_admin']) {
+        if (isset($_POST['from_manage']) && $_POST['from_manage'] == '1') {
+            header("Location: " . ADMIN_URL . "manage-recipes.php");
+        } else {
+            header("Location: " . ADMIN_URL . "view-recipe.php?id=" . $recipeId);
+        }
+        exit();
+    } else {
+        header("Location: " . RECIPE_URL . "view-recipe.php?id=" . $recipeId);
+        exit();
+    }
 
-    header("Location: " . RECIPE_URL . "view-recipe.php?id=" . $recipeId);
-    exit();
 
 } catch (PDOException $e) {
     echo "Error updating recipe: " . $e->getMessage();

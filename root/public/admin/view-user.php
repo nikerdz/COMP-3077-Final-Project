@@ -3,6 +3,13 @@ require_once('../../config/constants.php');
 require_once('../../config/db_config.php');
 session_start();
 
+if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
+    header("Location: " . PUBLIC_URL . "login.php");
+    exit();
+}
+
+$username = $_GET['username'];
+
 // Track recently viewed users
 if (!isset($_SESSION['recently_viewed_users'])) {
     $_SESSION['recently_viewed_users'] = [];
@@ -17,8 +24,6 @@ if (!isset($_GET['username'])) {
     echo "No user specified.";
     exit();
 }
-
-$username = $_GET['username'];
 
 $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
 $stmt->execute([':username' => $username]);
@@ -106,13 +111,25 @@ if (!$user) {
 
             <div class="profile-info">
                 <h2><?php echo $username; ?>'s Profile</h2>
-                <p><strong>Name:</strong> <?php echo $firstName; ?> <?php echo $lastName; ?></p>
+                <p><strong>Name:</strong> <?php echo $firstName . ' ' . $lastName; ?></p>
+                <p><strong>Joined:</strong> <?php echo date('F j, Y', strtotime($user['created_at'])); ?></p>
+
                 <?php if (!empty($aboutMe)): ?>
                     <p><strong>About Me:</strong> <?php echo nl2br($aboutMe); ?></p>
                 <?php else: ?>
                     <p><strong>About Me:</strong> <em>No bio yet.</em></p>
                 <?php endif; ?>
 
+                <?php if ($user['username'] !== 'admin'): ?>
+                    <div style="margin-top: 20px;">
+                        <a href="<?php echo PHP_URL . 'delete_user_submit.php?id=' . $userId; ?>" 
+                        class="btn" 
+                        style="background-color: #e63946;"
+                        onclick="return confirm('Are you sure you want to delete this user? This action cannot be undone.');">
+                        Delete User
+                        </a>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -128,7 +145,7 @@ if (!$user) {
                 </div>
             <?php else: ?>
                 <div class="recipe-grid">
-                    <?php foreach (array_slice($recipes, 0, 4) as $recipe): ?>
+                    <?php foreach ($recipes as $recipe): ?>
                         <?php
                         $imageUrlRaw = $recipe['image_url'] ?? '';
                         $imagePath = '';
@@ -145,7 +162,7 @@ if (!$user) {
                         <div class="recipe-card">
                             <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Recipe Image">
                             <h4>
-                                <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-link">
+                                <a href="<?php echo ADMIN_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-link">
                                     <?php echo htmlspecialchars($recipe['title']); ?>
                                 </a>
                             </h4>
@@ -155,14 +172,6 @@ if (!$user) {
                         </div>
                     <?php endforeach; ?>
                 </div>
-
-                <?php if (count($recipes) > 4): ?>
-                    <div style="text-align: center; margin-top: 20px;">
-                        <a href="<?php echo RECIPE_URL . 'user-recipes.php?username=' . urlencode($username); ?>" class="btn">
-                            View All of <?php echo $username; ?>'s Recipes
-                        </a>
-                    </div>
-                <?php endif; ?>
             <?php endif; ?>
         </div>
     </div>
@@ -179,7 +188,7 @@ if (!$user) {
                 </div>
             <?php else: ?>
                 <div class="recipe-grid">
-                    <?php foreach (array_slice($favRecipes, 0, 4) as $recipe): ?>
+                    <?php foreach ($favRecipes as $recipe): ?>
                         <?php
                         $imageUrlRaw = $recipe['image_url'] ?? '';
                         $imagePath = '';
@@ -196,11 +205,11 @@ if (!$user) {
                         <div class="recipe-card">
                             <img src="<?php echo htmlspecialchars($imagePath); ?>" alt="Recipe Image">
                             <h4>
-                                <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-link">
+                                <a href="<?php echo ADMIN_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-link">
                                     <?php echo htmlspecialchars($recipe['title']); ?>
                                 </a>
                             </h4>
-                            <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['creator_username']); ?>" class="author-link">
+                            <a href="<?php echo ADMIN_URL . 'view-user.php?username=' . urlencode($recipe['creator_username']); ?>" class="author-link">
                                 By <?php echo htmlspecialchars($recipe['creator_username']); ?>
                             </a>
                             <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
@@ -210,13 +219,6 @@ if (!$user) {
                     <?php endforeach; ?>
                 </div>
 
-                <?php if (count($favRecipes) > 4): ?>
-                    <div style="text-align: center; margin-top: 20px;">
-                        <a href="<?php echo RECIPE_URL . 'favourite-recipes.php?username=' . urlencode($username); ?>" class="btn">
-                            View All of <?php echo $username; ?>'s Favourites
-                        </a>
-                    </div>
-                <?php endif; ?>
             <?php endif; ?>
         </div>
     </div>

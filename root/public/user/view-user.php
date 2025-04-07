@@ -97,6 +97,7 @@ if (!$user) {
             <div class="profile-info">
                 <h2><?php echo $username; ?>'s Profile</h2>
                 <p><strong>Name:</strong> <?php echo $firstName; ?> <?php echo $lastName; ?></p>
+                <p><strong>Joined:</strong> <?php echo date('F j, Y', strtotime($user['created_at'])); ?></p>
                 <?php if (!empty($aboutMe)): ?>
                     <p><strong>About Me:</strong> <?php echo nl2br($aboutMe); ?></p>
                 <?php else: ?>

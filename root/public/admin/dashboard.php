@@ -62,31 +62,17 @@ $recentRecipeStmt = $pdo->prepare("SELECT * FROM recipes WHERE created_by = :uid
 $recentRecipeStmt->execute([':uid' => $userId]);
 $recentRecipe = $recentRecipeStmt->fetch(PDO::FETCH_ASSOC);
 
-// Fetch recent comments on user's recipes
+// Fetch recent comments
 $commentsStmt = $pdo->prepare("
     SELECT c.*, u.username AS commenter, r.title AS recipe_title, r.id AS recipe_id
     FROM comments c
     JOIN recipes r ON c.recipe_id = r.id
     JOIN users u ON c.user_id = u.id
-    WHERE r.created_by = :uid
     ORDER BY c.created_at DESC
     LIMIT 3
 ");
-$commentsStmt->execute([':uid' => $userId]);
+$commentsStmt->execute();
 $recentComments = $commentsStmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Fetch 3 random recipes the user didn't create
-$stmt = $pdo->prepare("
-    SELECT recipes.*, users.username 
-    FROM recipes 
-    JOIN users ON recipes.created_by = users.id 
-    WHERE created_by != :user_id 
-    ORDER BY RAND() 
-    LIMIT 3
-");
-$stmt->execute([':user_id' => $_SESSION['user_id']]);
-$randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 
 
@@ -157,9 +143,13 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($recentlyViewedUsers as $user): ?>
                     <div class="user-card">
                         <img src="<?php echo PROFILES_URL . ($user['profile_pic'] ?? 'default.png'); ?>" alt="User Profile">
-                        <h4><a href="<?php echo ADMIN_URL . 'view-user.php?username=' . urlencode($user['username']); ?>">
-                            <?php echo htmlspecialchars($user['username']); ?>
-                        </a></h4>
+                        <h4> 
+                            <a href="<?php echo ADMIN_URL . 'view-user.php?username=' . urlencode($user['username']); ?>" class="recipe-title-link"> <?php echo htmlspecialchars($user['username']); ?>
+                            </a>
+                        </h4>
+                        <p><?php echo htmlspecialchars($user['first_name'] . ' ' . $user['last_name']); ?></p>
+                        <p><?php echo htmlspecialchars($user['email']); ?></p>
+                        <p>Joined: <?php echo date('F j, Y', strtotime($user['created_at'])); ?></p>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -200,7 +190,7 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </section>
 
     <section class="dashboard-comments">
-        <h3>Recent Comments on Your Recipes</h3>
+        <h3>Recent Comments</h3>
         <?php if (!empty($recentComments)): ?>
             <?php foreach ($recentComments as $comment): ?>
                 <div class="comment-card">
