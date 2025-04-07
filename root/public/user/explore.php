@@ -55,12 +55,13 @@ session_start();
 
     <?php
     $categories = [
-        "Featured Recipes" => "SELECT * FROM recipes WHERE favourite_count >= 5 ORDER BY favourite_count DESC LIMIT 5",
-        "User-Created Recipes" => "SELECT * FROM recipes WHERE is_api = 0 ORDER BY created_at DESC LIMIT 5",
-        "Vegetarian Delights" => "SELECT * FROM recipes WHERE vegetarian = 1 ORDER BY RAND() LIMIT 5",     
-        "Gluten-Free Goodness" => "SELECT * FROM recipes WHERE gluten_free = 1 ORDER BY RAND() LIMIT 5",
-        "Quick & Easy (Under 30 Min)" => "SELECT * FROM recipes WHERE ready_in_minutes <= 30 ORDER BY RAND() LIMIT 5",   
-    ];
+    "Featured Recipes" => "SELECT recipes.*, users.username FROM recipes JOIN users ON recipes.created_by = users.id WHERE favourite_count >= 5 ORDER BY favourite_count DESC LIMIT 5",
+    "User-Created Recipes" => "SELECT recipes.*, users.username FROM recipes JOIN users ON recipes.created_by = users.id WHERE is_api = 0 ORDER BY created_at DESC LIMIT 5",
+    "Vegetarian Delights" => "SELECT recipes.*, users.username FROM recipes JOIN users ON recipes.created_by = users.id WHERE vegetarian = 1 ORDER BY RAND() LIMIT 5",     
+    "Gluten-Free Goodness" => "SELECT recipes.*, users.username FROM recipes JOIN users ON recipes.created_by = users.id WHERE gluten_free = 1 ORDER BY RAND() LIMIT 5",
+    "Quick & Easy (Under 30 Min)" => "SELECT recipes.*, users.username FROM recipes JOIN users ON recipes.created_by = users.id WHERE ready_in_minutes <= 30 ORDER BY RAND() LIMIT 5",   
+];
+
 
     foreach ($categories as $title => $sql):
         $stmt = $pdo->query($sql);
@@ -86,6 +87,9 @@ session_start();
                                 <?php echo htmlspecialchars($recipe['title']); ?>
                             </a>
                         </h4>
+                        <p> <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">By <?php echo htmlspecialchars($recipe['username']); ?>
+                            </a>
+                        </p>
                         <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
                         <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
                         <p class="favourite-count">❤️ <?php echo $favCount; ?></p>

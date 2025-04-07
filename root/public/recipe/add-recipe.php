@@ -80,14 +80,22 @@ if (!isset($_SESSION['user_id'])) {
             <label for="cooking_time">Cooking Time (minutes)</label>
             <input type="number" name="cooking_time" id="cooking_time" required>
 
-            <label for="vegetarian">Vegetarian</label>
-            <input type="checkbox" name="vegetarian" id="vegetarian" value="1">
+            <div class="checkbox-group">
+                <label class="checkbox-item" for="vegetarian">
+                    <input type="checkbox" name="vegetarian" id="vegetarian" value="1">
+                    <span>Vegetarian</span>
+                </label>
 
-            <label for="gluten_free">Gluten Free</label>
-            <input type="checkbox" name="gluten_free" id="gluten_free" value="1">
+                <label class="checkbox-item" for="gluten_free">
+                    <input type="checkbox" name="gluten_free" id="gluten_free" value="1">
+                    <span>Gluten Free</span>
+                </label>
 
-            <label for="dairy_free">Dairy Free</label>
-            <input type="checkbox" name="dairy_free" id="dairy_free" value="1">
+                <label class="checkbox-item" for="dairy_free">
+                    <input type="checkbox" name="dairy_free" id="dairy_free" value="1">
+                    <span>Dairy Free</span>
+                </label>
+            </div>
 
             <label for="meal_type">Meal Type</label>
             <select name="meal_type" id="meal_type">

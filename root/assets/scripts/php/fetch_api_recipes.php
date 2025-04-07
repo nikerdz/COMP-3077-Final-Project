@@ -36,9 +36,9 @@ foreach ($recipes as $recipe) {
         ':image_url' => $recipe['image'],
         ':cuisine_type' => implode(', ', $recipe['cuisines']),
         ':difficulty' => 'Medium', // Spoonacular doesn't provide difficulty; set a default or determine based on other factors
-        ':vegetarian' => $recipe['vegetarian'],
-        ':gluten_free' => $recipe['glutenFree'],
-        ':dairy_free' => $recipe['dairyFree'],
+        ':vegetarian' => $recipe['vegetarian'] ? 1 : 0,
+        ':gluten_free' => $recipe['glutenFree'] ? 1 : 0,
+        ':dairy_free' => $recipe['dairyFree'] ? 1 : 0,
         ':meal_type' => 'Dinner', // Determine based on recipe details or set a default
         ':servings' => $recipe['servings'],
         ':ready_in_minutes' => $recipe['readyInMinutes'],

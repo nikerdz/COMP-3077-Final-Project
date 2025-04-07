@@ -8,7 +8,13 @@ $recentlyViewedRecipes = [];
 
 if (!empty($_SESSION['recently_viewed'])) {
     $placeholders = implode(',', array_fill(0, count($_SESSION['recently_viewed']), '?'));
-    $stmt = $pdo->prepare("SELECT * FROM recipes WHERE id IN ($placeholders)");
+    $stmt = $pdo->prepare("
+        SELECT recipes.*, users.username 
+        FROM recipes 
+        JOIN users ON recipes.created_by = users.id 
+        WHERE recipes.id IN ($placeholders)
+    ");
+
     $stmt->execute($_SESSION['recently_viewed']);
     $fetched = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -49,7 +55,9 @@ $recentComments = $commentsStmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Fetch 3 random recipes the user didn't create
 $stmt = $pdo->prepare("
-    SELECT * FROM recipes 
+    SELECT recipes.*, users.username 
+    FROM recipes 
+    JOIN users ON recipes.created_by = users.id 
     WHERE created_by != :user_id 
     ORDER BY RAND() 
     LIMIT 3
@@ -128,6 +136,9 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php echo htmlspecialchars($recipe['title']); ?>
                             </a>
                         </h4>
+                        <p> <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">By <?php echo htmlspecialchars($recipe['username']); ?>
+                            </a>
+                        </p>
                         <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
                         <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
                         <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
@@ -188,6 +199,9 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php echo htmlspecialchars($recipe['title']); ?>
                             </a>
                         </h4>
+                        <p> <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">By <?php echo htmlspecialchars($recipe['username']); ?>
+                            </a>
+                        </p>
                         <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
                         <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
                         <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
