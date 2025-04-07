@@ -1,7 +1,6 @@
 # COMP-3077-Final-Project
 
-![image](root/assets/img/dev-diary.mkv)
-![image](root/assets/img/dashboardmd)
+![Dashboard Screenshot](root/assets/img/dashboardmd.png)
 
 # 🍲 RecipeHub
 
