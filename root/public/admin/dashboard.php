@@ -130,7 +130,7 @@ $recentComments = $commentsStmt->fetchAll(PDO::FETCH_ASSOC);
     <section class="dashboard-section">
         <h3>Quick Links</h3>
         <div class="dashboard-links-admin">
-            <a href="<?php echo ADMIN_URL; ?>monitor.php" class="btn">System Monitor</a>
+            <a href="<?php echo ADMIN_URL; ?>monitor.php" class="btn">Systems Monitor</a>
             <a href="<?php echo ADMIN_URL; ?>manage-recipes.php" class="btn">Manage Recipes</a>
             <a href="<?php echo ADMIN_URL; ?>manage-users.php" class="btn">Manage Users</a>
         </div>

@@ -1,0 +1,65 @@
+.monitor-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+}
+
+.monitor-container h1,
+.monitor-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.status-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.status-table th,
+.status-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.status-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.online {
+    background-color: #d4edda;
+    color: #155724;
+    font-weight: bold;
+}
+
+.offline {
+    background-color: #f8d7da;
+    color: #721c24;
+    font-weight: bold;
+}
+
+.graph-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 500px;
+    margin: 0 auto; 
+}
+
+.chart-section {
+    padding-left: 26px;
+    text-align: center;
+    margin-top: 40px;
+    width: 80%;  
+}
+
+.chart-section canvas {
+    max-width: 100%;
+    height: auto;
+    width: 700px; 
+}
+

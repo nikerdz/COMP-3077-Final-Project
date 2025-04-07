@@ -70,6 +70,20 @@ session_start();
             <button type="submit">Send Message</button>
         </form>
     </div>
+
+    <div class="map-section">
+        <section class="settings-card">
+            <h2 style="text-align: center;">Contact Us</h2>
+            <p><strong>Phone:</strong> (123) 456-789</p>
+            <p><strong>Email:</strong> <a href="mailto:help@recipehub.ca">help@recipehub.ca</a></p>
+            <p><strong>Address:</strong> 401 Sunset Ave, Windsor, ON N9B 3P4</p>
+            <br>
+        <iframe 
+            src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=401%20Sunset%20Ave,%20Windsor,%20ON%20N9B%203P4+(University%20of%20Windsor)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" 
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+        </iframe>
+        </section>
+    </div>
 </main>
 
 

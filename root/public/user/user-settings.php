@@ -81,7 +81,7 @@ $isAdmin = $_SESSION['is_admin'] ?? false;
                 <div class="theme-choice">
                     <img src="<?php echo IMG_URL; ?>logo.png" alt="Pink Theme" />
                     <form method="POST" action="#">
-                        <button class="btn">Pink (Default)</button>
+                        <button class="btn">Pink Theme</button>
                     </form>
                 </div>
 
