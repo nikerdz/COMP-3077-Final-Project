@@ -20,7 +20,6 @@ $profilePic = isset($_SESSION['user_id']) && !empty($_SESSION['profile_pic'])
                 <li><a href="<?php echo ADMIN_URL; ?>monitor.php">Systems Monitor</a></li>
                 <li><a href="<?php echo ADMIN_URL; ?>manage-recipes.php">Manage Recipes</a></li>
                 <li><a href="<?php echo ADMIN_URL; ?>manage-users.php">Manage Users</a></li>
-                <li><a href="<?php echo USER_URL; ?>profile.php">My Profile</a></li>
                 <li><a href="<?php echo USER_URL; ?>user-settings.php">Settings</a></li>
             <?php else: ?>
                 <!-- Regular User Links -->

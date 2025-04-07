@@ -182,6 +182,39 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <p class="random-p">No comments yet. Keep sharing your recipes!</p>
         <?php endif; ?>
     </section>
+
+    <section class="dashboard-section">
+        <h3>Recipes You Might Like</h3>
+        <?php if (!empty($randomRecipes)): ?>
+            <div class="recipe-grid">
+                <?php foreach ($randomRecipes as $recipe): ?>
+                    <?php
+                    // Fetch favourite count for each recipe
+                        $favCount = $recipe['favourite_count'] ?? 0;
+                        ?>
+                    <div class="recipe-card">
+                        <img src="<?php echo htmlspecialchars($recipe['image_url'] ?? IMG_URL . 'thumbnails/default.png'); ?>" alt="Suggested Recipe">
+                        <h4>
+                            <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-title-link">
+                                <?php echo htmlspecialchars($recipe['title']); ?>
+                            </a>
+                        </h4>
+                        <p> <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">By <?php echo htmlspecialchars($recipe['username']); ?>
+                            </a>
+                        </p>
+                        <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
+                        <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
+                        <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <p class="random-p">No suggestions available right now.</p>
+        <?php endif; ?>
+            <div class="dashboard-links">
+                <a href="<?php echo USER_URL; ?>explore.php" class="btn">Explore Recipes</a>
+            </div>
+    </section>
 </main>
 
 

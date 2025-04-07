@@ -173,6 +173,14 @@
     border-radius: 6px;
 }
 
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+
 .comment-form textarea {
     width: 100%;
     padding: 10px;
@@ -213,4 +221,19 @@
 
 .favourite-btn.active {
     color: #e76f51;
+}
+
+.delete-comment-btn {
+    background-color: #d4404c;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.delete-comment-btn:hover {
+    background-color: #882828;
 }

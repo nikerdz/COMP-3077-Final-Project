@@ -16,7 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $commentText = trim($_POST['comment']);
 
     if ($recipeId <= 0 || empty($commentText)) {
-        header('Location: ' . RECIPE_URL . 'view-recipe.php?id=' . $recipeId . '&error=invalid');
+        $redirectBase = !empty($_SESSION['is_admin']) ? ADMIN_URL : RECIPE_URL;
+        header('Location: ' . $redirectBase . 'view-recipe.php?id=' . $recipeId . '&error=invalid');
         exit();
     }
 
@@ -32,7 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':comment'   => $commentText
         ]);
 
-        header('Location: ' . RECIPE_URL . 'view-recipe.php?id=' . $recipeId . '&comment=success');
+        $redirectBase = !empty($_SESSION['is_admin']) ? ADMIN_URL : RECIPE_URL;
+        header('Location: ' . $redirectBase . 'view-recipe.php?id=' . $recipeId . '&comment=success');
         exit();
     } catch (PDOException $e) {
         echo "Database error: " . $e->getMessage();

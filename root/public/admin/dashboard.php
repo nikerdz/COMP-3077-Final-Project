@@ -8,6 +8,24 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
     exit();
 }
 
+$recentlyViewedUsers = [];
+
+if (!empty($_SESSION['recently_viewed_users'])) {
+    $placeholders = implode(',', array_fill(0, count($_SESSION['recently_viewed_users']), '?'));
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE username IN ($placeholders)");
+    $stmt->execute($_SESSION['recently_viewed_users']);
+    $fetchedUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($_SESSION['recently_viewed_users'] as $uname) {
+        foreach ($fetchedUsers as $u) {
+            if ($u['username'] === $uname) {
+                $recentlyViewedUsers[] = $u;
+                break;
+            }
+        }
+    }
+}
+
 $recentlyViewedRecipes = [];
 
 if (!empty($_SESSION['recently_viewed'])) {
@@ -118,11 +136,38 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="dashboard-profile">
                 <img src="<?php echo $profilePic ?>" alt="Profile Picture" width="500" height="600">
             </div>
-        <h1>Welcome back, <?php echo $firstName; ?></h1>
-        <p>Admin Dashboard</p>
+        <h1>Admin Dashboard</h1>
 </section>
 
 <main class="dashboard-container">
+
+    <section class="dashboard-section">
+        <h3>Quick Links</h3>
+        <div class="dashboard-links-admin">
+            <a href="<?php echo ADMIN_URL; ?>monitor.php" class="btn">System Monitor</a>
+            <a href="<?php echo ADMIN_URL; ?>manage-recipes.php" class="btn">Manage Recipes</a>
+            <a href="<?php echo ADMIN_URL; ?>manage-users.php" class="btn">Manage Users</a>
+        </div>
+    </section>
+
+    <section class="dashboard-section">
+        <h3 style="text-align: center;">Recently Viewed Users</h3>
+        <?php if (!empty($recentlyViewedUsers)): ?>
+            <div class="user-grid">
+                <?php foreach ($recentlyViewedUsers as $user): ?>
+                    <div class="user-card">
+                        <img src="<?php echo PROFILES_URL . ($user['profile_pic'] ?? 'default.png'); ?>" alt="User Profile">
+                        <h4><a href="<?php echo ADMIN_URL . 'view-user.php?username=' . urlencode($user['username']); ?>">
+                            <?php echo htmlspecialchars($user['username']); ?>
+                        </a></h4>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <p>You haven’t viewed any user profiles yet.</p>
+        <?php endif; ?>
+    </section>
+
     <section class="dashboard-section">
         <h3 style="text-align: center;">Recently Viewed Recipes</h3>
         <?php if (!empty($recentlyViewedRecipes)): ?>
@@ -136,11 +181,11 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <div class="recipe-card">
                         <img src="<?php echo htmlspecialchars($recipe['image_url'] ?? IMG_URL . 'thumbnails/default.png'); ?>" alt="Recipe Image">
                         <h4>
-                            <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-title-link">
+                            <a href="<?php echo ADMIN_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-title-link">
                                 <?php echo htmlspecialchars($recipe['title']); ?>
                             </a>
                         </h4>
-                        <p> <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">By <?php echo htmlspecialchars($recipe['username']); ?>
+                        <p> <a href="<?php echo ADMIN_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">By <?php echo htmlspecialchars($recipe['username']); ?>
                             </a>
                         </p>
                         <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
@@ -154,27 +199,16 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
     </section>
 
-    <section class="dashboard-section">
-        <h3>Quick Links</h3>
-        <div class="dashboard-links">
-            <a href="<?php echo RECIPE_URL; ?>user-recipes.php?username=<?php echo urlencode($username); ?>" class="btn">My Recipes</a>
-            <a href="<?php echo RECIPE_URL; ?>favourite-recipes.php?username=<?php echo urlencode($username); ?>" class="btn">My Favourites</a>
-            <a href="<?php echo RECIPE_URL; ?>add-recipe.php" class="btn">Post Recipe</a>
-            <a href="<?php echo USER_URL; ?>edit-profile.php" class="btn">Edit Profile</a>
-            <a href="<?php echo USER_URL; ?>user-settings.php" class="btn">Settings</a>
-        </div>
-    </section>
-
     <section class="dashboard-comments">
         <h3>Recent Comments on Your Recipes</h3>
         <?php if (!empty($recentComments)): ?>
             <?php foreach ($recentComments as $comment): ?>
                 <div class="comment-card">
                     <p>
-                    <strong><a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($comment['commenter']); ?>" class="comment-user-link">
+                    <strong><a href="<?php echo ADMIN_URL . 'view-user.php?username=' . urlencode($comment['commenter']); ?>" class="comment-user-link">
                             <?php echo htmlspecialchars($comment['commenter']); ?>
                         </a></strong> on 
-                        <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $comment['recipe_id']; ?>" class="comment-card-link">
+                        <a href="<?php echo ADMIN_URL . 'view-recipe.php?id=' . $comment['recipe_id']; ?>" class="comment-card-link">
                             <?php echo htmlspecialchars($comment['recipe_title']); ?>
                         </a>:
                     </p>
@@ -185,39 +219,6 @@ $randomRecipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php else: ?>
             <p class="random-p">No comments yet. Keep sharing your recipes!</p>
         <?php endif; ?>
-    </section>
-
-    <section class="dashboard-section">
-        <h3>Recipes You Might Like</h3>
-        <?php if (!empty($randomRecipes)): ?>
-            <div class="recipe-grid">
-                <?php foreach ($randomRecipes as $recipe): ?>
-                    <?php
-                    // Fetch favourite count for each recipe
-                        $favCount = $recipe['favourite_count'] ?? 0;
-                        ?>
-                    <div class="recipe-card">
-                        <img src="<?php echo htmlspecialchars($recipe['image_url'] ?? IMG_URL . 'thumbnails/default.png'); ?>" alt="Suggested Recipe">
-                        <h4>
-                            <a href="<?php echo RECIPE_URL . 'view-recipe.php?id=' . $recipe['id']; ?>" class="recipe-title-link">
-                                <?php echo htmlspecialchars($recipe['title']); ?>
-                            </a>
-                        </h4>
-                        <p> <a href="<?php echo USER_URL . 'view-user.php?username=' . urlencode($recipe['username']); ?>" class="author-link">By <?php echo htmlspecialchars($recipe['username']); ?>
-                            </a>
-                        </p>
-                        <p>Time: <?php echo $recipe['ready_in_minutes']; ?> mins</p>
-                        <p>Cuisine: <?php echo htmlspecialchars($recipe['cuisine_type']); ?></p>
-                        <p class="favourite-count">❤️ <?php echo $favCount; ?></p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php else: ?>
-            <p class="random-p">No suggestions available right now.</p>
-        <?php endif; ?>
-            <div class="dashboard-links">
-                <a href="<?php echo USER_URL; ?>explore.php" class="btn">Explore Recipes</a>
-            </div>
     </section>
 </main>
 
