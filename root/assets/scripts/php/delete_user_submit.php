@@ -3,41 +3,80 @@ require_once('../../../config/constants.php');
 require_once('../../../config/db_config.php');
 session_start();
 
-// Check if the user is an admin
-if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
+if (!isset($_SESSION['user_id'])) {
     header("Location: " . PUBLIC_URL . "login.php");
     exit();
 }
 
-// Validate the user ID to delete
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    echo "Invalid user ID.";
+$currentUserId = $_SESSION['user_id'];
+$isAdmin = $_SESSION['is_admin'] ?? false;
+
+// Admin deletes another user
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isAdmin && isset($_POST['admin_delete_id'])) {
+    $userIdToDelete = (int)$_POST['admin_delete_id'];
+
+    // Don't allow deletion of self this way
+    if ($userIdToDelete === $currentUserId) {
+        echo "Admins must delete their own account from their settings.";
+        exit();
+    }
+
+    // Get user
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :id");
+    $stmt->execute([':id' => $userIdToDelete]);
+    $user = $stmt->fetch();
+
+    if (!$user) {
+        echo "User not found.";
+        exit();
+    }
+
+    if ($user['is_admin']) {
+        echo "You cannot delete another admin account.";
+        exit();
+    }
+
+    // Delete related data
+    $pdo->prepare("DELETE FROM comments WHERE user_id = :id")->execute([':id' => $userIdToDelete]);
+    $pdo->prepare("DELETE FROM favourites WHERE user_id = :id")->execute([':id' => $userIdToDelete]);
+    $pdo->prepare("DELETE FROM recipes WHERE created_by = :id")->execute([':id' => $userIdToDelete]);
+
+    // Delete user
+    $pdo->prepare("DELETE FROM users WHERE id = :id")->execute([':id' => $userIdToDelete]);
+
+    header("Location: " . ADMIN_URL . "manage-users.php?deleted=1");
     exit();
 }
 
-$userIdToDelete = (int)$_GET['id'];
+//  Self-deletion (user confirms password)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_password'])) {
+    $enteredPassword = $_POST['confirm_password'];
 
-// Prevent deleting the main admin (or any admin)
-$stmt = $pdo->prepare("SELECT * FROM users WHERE id = :id");
-$stmt->execute([':id' => $userIdToDelete]);
-$user = $stmt->fetch();
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :id");
+    $stmt->execute([':id' => $currentUserId]);
+    $user = $stmt->fetch();
 
-if (!$user) {
-    echo "User not found.";
+    if (!$user) {
+        echo "User not found.";
+        exit();
+    }
+
+    if (!password_verify($enteredPassword, $user['password'])) {
+        header("Location: " . USER_URL . "user-settings.php?password=wrong");
+        exit();
+    }
+
+    $pdo->prepare("DELETE FROM comments WHERE user_id = :id")->execute([':id' => $currentUserId]);
+    $pdo->prepare("DELETE FROM favourites WHERE user_id = :id")->execute([':id' => $currentUserId]);
+    $pdo->prepare("DELETE FROM recipes WHERE created_by = :id")->execute([':id' => $currentUserId]);
+    $pdo->prepare("DELETE FROM users WHERE id = :id")->execute([':id' => $currentUserId]);
+
+    session_unset();
+    session_destroy();
+    header("Location: " . PUBLIC_URL . "index.php?account_deleted=1");
     exit();
 }
 
-// Do not allow deletion of admin accounts
-if ($user['is_admin']) {
-    echo "You cannot delete an admin account.";
-    exit();
-}
-
-// Delete the user’s related data if needed (optional: comments, recipes, etc.)
-
-// Delete user
-$deleteStmt = $pdo->prepare("DELETE FROM users WHERE id = :id");
-$deleteStmt->execute([':id' => $userIdToDelete]);
-
-header("Location: " . ADMIN_URL . "manage-users.php?deleted=1");
+echo "Invalid request.";
 exit();
+?>

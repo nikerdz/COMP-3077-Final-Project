@@ -17,6 +17,7 @@ $username = htmlspecialchars($_SESSION['username']);
 $email = htmlspecialchars($_SESSION['email']);
 $profilePic = !empty($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'default.png';
 $aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
+$isAdmin = $_SESSION['is_admin'] ?? false;
 ?>
 
 <!-- HTML Structure -->
@@ -72,20 +73,6 @@ $aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
 
     <div class="settings-section">
 
-        <!-- Change Password -->
-        <section class="settings-card">
-            <h2 style="text-align: center;">Change Password</h2>
-            <form action="<?php echo PHP_URL; ?>change_pass_submit.php" method="POST" class="contact-form">
-                <label for="current_password">Current Password:</label>
-                <input type="password" id="current_password" name="current_password" required>
-
-                <label for="new_password">New Password:</label>
-                <input type="password" id="new_password" name="new_password" required>
-
-                <button type="submit" class="btn">Update Password</button>
-            </form>
-        </section>
-
         <!-- Change Theme -->
         <section class="settings-card">
             <h2 style="text-align: center;">Change Site Theme</h2>
@@ -114,6 +101,35 @@ $aboutMe = htmlspecialchars($_SESSION['about_me'] ?? '');
 
             </div>
         </section>
+
+        <!-- Change Password -->
+        <section class="settings-card">
+            <h2 style="text-align: center;">Change Password</h2>
+            <form action="<?php echo PHP_URL; ?>change_pass_submit.php" method="POST" class="contact-form">
+                <label for="current_password">Current Password:</label>
+                <input type="password" id="current_password" name="current_password" required>
+
+                <label for="new_password">New Password:</label>
+                <input type="password" id="new_password" name="new_password" required>
+
+                <button type="submit" class="btn">Update Password</button>
+            </form>
+        </section>
+
+        <?php if (!$isAdmin): ?>
+        <!-- Delete Account -->
+        <section class="settings-card">
+            <h2 style="text-align: center; color: #e63946;">Delete Account</h2>
+            <p style="text-align: center;">This action is irreversible. Your recipes, comments, and favorites will be permanently deleted.</p>
+
+            <form action="<?php echo PHP_URL; ?>delete_user_submit.php" method="POST" class="contact-form" onsubmit="return confirm('Are you sure you want to delete your account? This cannot be undone.');">
+                <label for="confirm_password">Confirm Your Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+
+                <button type="submit" class="btn" style="background-color: #e63946;">Delete My Account</button>
+            </form>
+        </section>
+        <?php endif; ?>
 
     </div>
 </main>

@@ -121,15 +121,13 @@ if (!$user) {
                 <?php endif; ?>
 
                 <?php if ($user['username'] !== 'admin'): ?>
-                    <div style="margin-top: 20px;">
-                        <a href="<?php echo PHP_URL . 'delete_user_submit.php?id=' . $userId; ?>" 
-                        class="btn" 
-                        style="background-color: #e63946;"
-                        onclick="return confirm('Are you sure you want to delete this user? This action cannot be undone.');">
-                        Delete User
-                        </a>
-                    </div>
+                    <form method="POST" action="<?php echo PHP_URL . 'delete_user_submit.php'; ?>" 
+                        onsubmit="return confirm('Are you sure you want to delete this user? This action cannot be undone.');">
+                        <input type="hidden" name="admin_delete_id" value="<?php echo $user['id']; ?>">
+                        <button type="submit" class="btn" style="background-color: #e63946;">Delete User</button>
+                    </form>
                 <?php endif; ?>
+
             </div>
         </div>
     </div>

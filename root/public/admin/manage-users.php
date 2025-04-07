@@ -97,8 +97,12 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <p><?php echo $fullName; ?></p>
                 <p><?php echo $email; ?></p>
                 <p>Joined: <?php echo $joinDate; ?></p>
-                <?php if (!$user['is_admin']): ?>
-                    <a href="<?php echo PHP_URL . 'delete_user_submit.php?id=' . $user['id']; ?>" class="btn" style="background-color: #e63946;" onclick="return confirm('Delete this user?');">Delete</a>
+                <?php if ($user['username'] !== 'admin'): ?>
+                    <form method="POST" action="<?php echo PHP_URL . 'delete_user_submit.php'; ?>" 
+                        onsubmit="return confirm('Are you sure you want to delete this user? This action cannot be undone.');">
+                        <input type="hidden" name="admin_delete_id" value="<?php echo $user['id']; ?>">
+                        <button type="submit" class="btn" style="background-color:#e63946;">Delete User</button>
+                    </form>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>

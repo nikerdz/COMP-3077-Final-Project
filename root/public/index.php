@@ -54,11 +54,15 @@ session_start();
         Create your own digital recipe book, explore new cuisines, and connect with fellow cooking enthusiasts.</p>
                 </br>
                 </br>
-                <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="user/dashboard.php" class="btn">My Dashboard</a>
-        <?php else: ?>
-            <a href="register.php" class="btn">Get Started</a>
-        <?php endif; ?>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <?php if (!empty($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                    <a href="admin/dashboard.php" class="btn">Admin Dashboard</a>
+                <?php else: ?>
+                    <a href="user/dashboard.php" class="btn">My Dashboard</a>
+                <?php endif; ?>
+            <?php else: ?>
+                <a href="register.php" class="btn">Get Started</a>
+            <?php endif; ?>
     </div>
 
     <section class="features">
